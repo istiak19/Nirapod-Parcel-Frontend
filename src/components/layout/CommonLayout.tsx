@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Footer from "./Footer/Footer";
 
 interface IProps {
     children: ReactNode
@@ -11,7 +12,7 @@ const CommonLayout = ({ children }: IProps) => {
             <div className="grow-1">
                 {children}
             </div>
-            {/* <Footer /> */}
+            <Footer />
         </div>
     );
 };
