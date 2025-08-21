@@ -1,99 +1,77 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 import config from "@/config";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import Password from "@/components/ui/password";
-import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import { Button } from "@/components/ui/button";
+import { useLoginMutation } from "@/redux/features/auth/auth.api";
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
-const registerFormSchema = z
+const loginFormSchema = z
     .object({
-        name: z.string().min(2, {
-            message: "Name must be at least 2 characters",
-        }),
         email: z.email({ message: "Enter a valid email address" }),
         password: z.string().min(6, {
             message: "Password must be at least 6 characters",
         }).regex(passwordRegex, {
             message: "Password must include uppercase, lowercase, number, and special character",
-        }),
-        confirmPassword: z.string().min(6, {
-            message: "Confirm Password must be at least 6 characters",
-        }),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-        message: "Passwords do not match",
-        path: ["confirmPassword"],
+        })
     });
 
-type RegisterFormValues = z.infer<typeof registerFormSchema>;
+type RegisterFormValues = z.infer<typeof loginFormSchema>;
 
-const RegisterForm = ({
+const LoginForm = ({
     className,
     ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
-    const [register] = useRegisterMutation();
+    const [login] = useLoginMutation();
     const navigate = useNavigate();
 
     const form = useForm<RegisterFormValues>({
-        resolver: zodResolver(registerFormSchema),
+        resolver: zodResolver(loginFormSchema),
         defaultValues: {
-            name: "",
             email: "",
             password: "",
-            confirmPassword: "",
         },
     });
 
     const onSubmit = async (data: RegisterFormValues) => {
-        const { name, email, password } = data;
-        const userInfo = { name, email, password };
-        console.log(userInfo)
+        const { email, password } = data;
+        const userInfo = { email, password };
         try {
-            const result = await register(userInfo).unwrap();
-            console.log(result)
-            if (result.success === true) {
-                navigate("/verify")
+            const result = await login(userInfo).unwrap();
+            console.log(result);
+            if (result.success) {
+                toast.success("Logged in successfully!")
+                navigate("/")
             };
-
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            if (error.data.message === "User is not verified") {
+                navigate("/verify", { state: data.email });
+            };
+            if (error.data.message === "Incorrect password") {
+                toast.error("Incorrect password. Please try again.");
+            };
+            // console.log(error)
         }
     };
 
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
             <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="text-2xl font-bold text-center mb-6">     Create your account </h1>
-                <p className="text-sm text-muted-foreground">
-                    Fill in your details to register
+                <h1 className="text-2xl font-bold">Login to your account</h1>
+                <p className="text-muted-foreground text-sm text-balance">
+                    Enter your email below to login to your account
                 </p>
             </div>
 
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-                    {/** Name */}
-                    <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Name</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Your full name" {...field} />
-                                </FormControl>
-                                <FormDescription className="sr-only">
-                                    This is your public display name.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
 
                     {/** Email */}
                     <FormField
@@ -131,26 +109,8 @@ const RegisterForm = ({
                         )}
                     />
 
-                    {/** Confirm Password */}
-                    <FormField
-                        control={form.control}
-                        name="confirmPassword"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Confirm Password</FormLabel>
-                                <FormControl>
-                                    <Password {...field} />
-                                </FormControl>
-                                <FormDescription className="sr-only">
-                                    This is your public display confirm password.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <Button type="submit" className="w-full cursor-pointer bg-red-500 text-foreground hover:bg-red-400">
-                        Create Account
+                    <Button type="submit" className="w-full cursor-pointer bg-red-500 hover:bg-red-600 text-foreground">
+                        Login
                     </Button>
                 </form>
             </Form>
@@ -160,6 +120,7 @@ const RegisterForm = ({
                     Or continue with
                 </span>
             </div>
+            {/* http://localhost:5000/api/v1/auth/google */}
             <Button
                 onClick={() => { window.location.href = `${config.baseUrl}/auth/google` }}
                 type="button"
@@ -169,17 +130,14 @@ const RegisterForm = ({
                 Continue with Google
             </Button>
 
-            <div className="mt-6 text-center text-sm text-muted-foreground">
-                Already have an account?{" "}
-                <Link
-                    to="/login"
-                    className="text-primary font-medium hover:underline"
-                >
-                    Login
+            <div className="text-center text-sm">
+                Don&apos;t have an account?{" "}
+                <Link to="/register" replace className="text-primary font-medium hover:underline">
+                    Register
                 </Link>
             </div>
         </div>
     );
 };
 
-export default RegisterForm;
+export default LoginForm;

@@ -6,6 +6,7 @@ import { createBrowserRouter } from "react-router";
 const Contact = lazy(() => import("@/pages/Contact"));
 const About = lazy(() => import("@/pages/About"));
 const Register = lazy(() => import("@/pages/Auth/Register"));
+const Login = lazy(() => import("@/pages/Auth/Login"));
 
 const router = createBrowserRouter([
     {
@@ -27,8 +28,12 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path:"/register",
-        Component:Register
+        path: "/login",
+        Component: Login
+    },
+    {
+        path: "/register",
+        Component: Register
     }
 ]);
 
