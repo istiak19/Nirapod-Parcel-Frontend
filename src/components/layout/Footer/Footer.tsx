@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import Logo from "@/assets/icons/Logo";
+import FooterPic from "@/assets/images/footer-bg.png";
 import { FaFacebookF, FaInstagram, FaTwitter, FaGithub } from "react-icons/fa";
 
 const Footer = () => {
@@ -13,10 +14,10 @@ const Footer = () => {
     return (
         <footer
             className="relative border-t border-[#ff7b00c3] bg-cover bg-center"
-        // style={{ backgroundImage: `url(${footerPic})` }}
+            style={{ backgroundImage: `url(${FooterPic})` }}
         >
             {/* Overlay for readability */}
-            <div className="absolute inset-0 bg-black/60" />
+            <div className="absolute inset-0 bg-black/38" />
 
             <div className="relative mx-auto container space-y-10 px-4 py-12 text-white">
                 <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
@@ -25,13 +26,13 @@ const Footer = () => {
                         <div>
                             <Logo />
                             <p className="text-sm font-medium mt-2">
-                                Explore Bangladesh. Experience Freedom.
+                                Safe Deliveries. Trusted Service.
                             </p>
                         </div>
 
                         <p className="mt-4 max-w-sm text-sm text-gray-200">
-                            CholoGhuri.com is your trusted companion in discovering Bangladesh.
-                            Book tours, explore destinations, and travel with ease.
+                            Nirapod-Parcel is your trusted companion in secure and reliable parcel delivery.
+                            Send packages, track deliveries, and experience peace of mind.
                         </p>
 
                         <ul className="mt-6 flex gap-6">
@@ -41,7 +42,7 @@ const Footer = () => {
                                         href={href}
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="hover:text-yellow-400 transition text-xl"
+                                        className="hover:text-teal-400 transition text-xl"
                                         aria-label={name}
                                     >
                                         {icon}
@@ -52,43 +53,37 @@ const Footer = () => {
                     </div>
 
                     {/* Links grid */}
-                    <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
+                    <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-3 justify-between">
+                        {/* Services */}
                         <div>
                             <p className="font-semibold">Services</p>
                             <ul className="mt-4 space-y-3 text-sm text-gray-300">
-                                <li><Link to="/" className="hover:underline">Tour Packages</Link></li>
-                                <li><Link to="/" className="hover:underline">Custom Trips</Link></li>
-                                <li><Link to="/" className="hover:underline">Travel Insurance</Link></li>
+                                <li><Link to="/" className="hover:underline">Parcel Delivery</Link></li>
+                                <li><Link to="/" className="hover:underline">Same Day Delivery</Link></li>
+                                <li><Link to="/" className="hover:underline">Cash on Delivery (COD)</Link></li>
+                                <li><Link to="/" className="hover:underline">E-commerce Logistics</Link></li>
                             </ul>
                         </div>
 
+                        {/* Company */}
                         <div>
                             <p className="font-semibold">Company</p>
                             <ul className="mt-4 space-y-3 text-sm text-gray-300">
-                                <li><Link to="/" className="hover:underline">About Us</Link></li>
-                                <li><Link to="/" className="hover:underline">Careers</Link></li>
-                                <li><Link to="/" className="hover:underline">Press</Link></li>
-                                <li><Link to="/" className="hover:underline">Blog</Link></li>
+                                <li><Link to="/about" className="hover:underline">About Us</Link></li>
+                                <li><Link to="/careers" className="hover:underline">Careers</Link></li>
+                                <li><Link to="/partners" className="hover:underline">Partners</Link></li>
+                                <li><Link to="/blog" className="hover:underline">Blog</Link></li>
                             </ul>
                         </div>
 
+                        {/* Support */}
                         <div>
                             <p className="font-semibold">Support</p>
                             <ul className="mt-4 space-y-3 text-sm text-gray-300">
-                                <li><Link to="/" className="hover:underline">Contact Us</Link></li>
-                                <li><Link to="/" className="hover:underline">Help Center</Link></li>
-                                <li><Link to="/" className="hover:underline">Booking Guide</Link></li>
-                                <li><Link to="/" className="hover:underline">Cancellations</Link></li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <p className="font-semibold">Legal</p>
-                            <ul className="mt-4 space-y-3 text-sm text-gray-300">
-                                <li><Link to="/" className="hover:underline">Terms & Conditions</Link></li>
-                                <li><Link to="/" className="hover:underline">Privacy Policy</Link></li>
-                                <li><Link to="/" className="hover:underline">Cookie Policy</Link></li>
-                                <li><Link to="/" className="hover:underline">Refund Policy</Link></li>
+                                <li><Link to="/contact" className="hover:underline">Contact Us</Link></li>
+                                <li><Link to="/help" className="hover:underline">Help Center</Link></li>
+                                <li><Link to="/faqs" className="hover:underline">FAQs</Link></li>
+                                <li><Link to="/policies" className="hover:underline">Policies</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -108,7 +103,10 @@ const Footer = () => {
                                 <Link to="/" className="transition hover:opacity-75"> Privacy Policy </Link>
                             </li>
                             <li>
-                                <Link to="/" className="transition hover:opacity-75"> Cookies </Link>
+                                <Link to="/" className="transition hover:opacity-75"> Cookie Policy </Link>
+                            </li>
+                            <li>
+                                <Link to="/" className="transition hover:opacity-75"> Refund Policy </Link>
                             </li>
                         </ul>
                     </div>
