@@ -24,7 +24,7 @@ const Footer = () => {
                     {/* Logo + description */}
                     <div>
                         <div>
-                            <Logo />
+                            <Logo className="text-red-500" />
                             <p className="text-sm font-medium mt-2">
                                 Safe Deliveries. Trusted Service.
                             </p>
