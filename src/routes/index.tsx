@@ -1,10 +1,10 @@
 import App from "@/App";
-import About from "@/pages/About";
 import Home from "@/pages/Home";
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
 
 const Contact = lazy(() => import("@/pages/Contact"));
+const About = lazy(() => import("@/pages/About"));
 
 const router = createBrowserRouter([
     {

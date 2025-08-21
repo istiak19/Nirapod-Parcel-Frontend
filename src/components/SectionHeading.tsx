@@ -14,7 +14,7 @@ const SectionHeading = ({
             <div
                 className={`flex items-center gap-2 mb-4 ${align === "center" ? "justify-center" : ""
                     }`}
-            >   <span className="text-[#FF7A00] italic font-semibold select-none">
+            >   <span className="text-red-500 italic font-semibold select-none">
                     {kicker}
                 </span>
             </div>
