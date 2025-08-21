@@ -8,3 +8,10 @@ export interface ISidebarItem {
         component: ComponentType;
     }[];
 };
+
+export interface SectionHeadingProps {
+    kicker?: string;
+    title: string;
+    subtitle?: string;
+    align?: "left" | "center";
+};
