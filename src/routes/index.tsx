@@ -16,6 +16,8 @@ const About = lazy(() => import("@/pages/About"));
 const Register = lazy(() => import("@/pages/Auth/Register"));
 const Login = lazy(() => import("@/pages/Auth/Login"));
 const Verify = lazy(() => import("@/pages/Verify"));
+const Unauthorized = lazy(() => import("@/pages/Unauthorized"));
+const NotFound  = lazy(() => import("@/pages/NotFound"));
 
 const router = createBrowserRouter([
     {
@@ -77,7 +79,15 @@ const router = createBrowserRouter([
     {
         path: "/verify",
         Component: Verify
-    }
+    },
+    {
+        path: "/unauthorized",
+        Component: Unauthorized
+    },
+    {
+        path: "*",
+        Component: NotFound
+    },
 ]);
 
 export default router;
