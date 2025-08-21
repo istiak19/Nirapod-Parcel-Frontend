@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Password from "@/components/ui/password";
 import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
 const registerFormSchema = z
@@ -17,6 +18,7 @@ const registerFormSchema = z
             message: "Name must be at least 2 characters",
         }),
         email: z.email({ message: "Enter a valid email address" }),
+        role: z.string({ message: "Please select a valid role (Sender or Receiver)" }),
         password: z.string().min(6, {
             message: "Password must be at least 6 characters",
         }).regex(passwordRegex, {
@@ -45,20 +47,19 @@ const RegisterForm = ({
         defaultValues: {
             name: "",
             email: "",
+            role: "",
             password: "",
             confirmPassword: "",
         },
     });
 
     const onSubmit = async (data: RegisterFormValues) => {
-        const { name, email, password } = data;
-        const userInfo = { name, email, password };
-        console.log(userInfo)
+        const { name, email, password, role } = data;
+        const userInfo = { name, email, password, role };
         try {
             const result = await register(userInfo).unwrap();
-            console.log(result)
             if (result.success === true) {
-                navigate("/verify")
+                navigate("/verify", { state: data.email })
             };
 
         } catch (error) {
@@ -107,6 +108,32 @@ const RegisterForm = ({
                                 </FormControl>
                                 <FormDescription className="sr-only">
                                     This is your public display email.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    {/** Role */}
+                    <FormField
+                        control={form.control}
+                        name="role"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Role selection</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Select your role" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        <SelectItem value="Receiver">Receiver</SelectItem>
+                                        <SelectItem value="Sender">Sender</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                <FormDescription className="sr-only">
+                                    Choose whether you want to register as a Sender or Receiver.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>

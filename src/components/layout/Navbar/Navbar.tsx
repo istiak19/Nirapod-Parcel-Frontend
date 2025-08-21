@@ -4,11 +4,14 @@ import { Button } from "@/components/ui/button"
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { role } from "@/constants/role"
+import { authApi, useLogoutMutation } from "@/redux/features/auth/auth.api"
+import { useGetMeUserQuery } from "@/redux/features/user/user.api"
+import { useAppDispatch } from "@/redux/hooks"
 import { Link } from "react-router"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "/", label: "Home", role: "PUBLIC"},
+  { href: "/", label: "Home", role: "PUBLIC" },
   { href: "/about", label: "About", role: "PUBLIC" },
   { href: "/tours", label: "Tours", role: "PUBLIC" },
   { href: "/admin", label: "Dashboard", role: role.admin },
@@ -18,8 +21,16 @@ const navigationLinks = [
 ]
 
 export default function Navbar() {
+  const { data } = useGetMeUserQuery(undefined);
+  const [logout] = useLogoutMutation();
+  const dispatch = useAppDispatch();
+  const handleLogout = async () => {
+    await logout(undefined);
+    dispatch(authApi.util.resetApiState());
+  };
+
   return (
-    <header className="border-b px-4 md:px-6">
+    <header className="border-b px-4 md:px-6 shadow-md sticky top-0 z-50">
       <div className="flex h-16 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex items-center gap-2">
@@ -54,9 +65,17 @@ export default function Navbar() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <ModeToggle />
-          <Button asChild variant="ghost" size="sm" className="text-sm">
-            <a href="#">Sign In</a>
-          </Button>
+          {
+            data?.data?.email ? (<Button
+              onClick={handleLogout}
+              variant="outline"
+              className="text-sm cursor-pointer"
+            >
+              Logout
+            </Button>) : (<Button asChild className="text-sm hidden md:inline-flex bg-red-500 hover:bg-reg-600 text-white">
+              <Link to="/login">Login</Link>
+            </Button>)
+          }
           {/* Mobile menu trigger */}
           <Popover>
             <PopoverTrigger asChild>

@@ -8,9 +8,9 @@ import { toast } from "react-toastify";
 import config from "@/config";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Password from "@/components/ui/password";
 import { Button } from "@/components/ui/button";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import Password from "@/components/ui/password";
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
 const loginFormSchema = z
