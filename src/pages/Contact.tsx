@@ -1,32 +1,47 @@
+import { useState } from "react";
 import SectionHeading from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
 import contactPic from "@/assets/images/contact.jpg";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const Contact = () => {
+    const [formData, setFormData] = useState({
+        name: "",
+        phone: "",
+        email: "",
+        subject: "",
+        message: "",
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        // Simulate submission
+        console.log("Form submitted:", formData);
+        toast.success("Message sent successfully!");
+        setFormData({ name: "", phone: "", email: "", subject: "", message: "" });
+    };
+
     return (
         <section className="pb-10">
             {/* Banner */}
-            <div className="relative h-[200px] md:h-[300px] flex items-center justify-center bg-center bg-no-repeat mb-10"
-                style={{
-                    backgroundImage: `url(${contactPic})`,
-                }}
+            <div
+                className="relative h-[200px] md:h-[300px] flex items-center justify-center bg-center bg-no-repeat mb-10"
+                style={{ backgroundImage: `url(${contactPic})` }}
             >
-                {/* Overlay */}
                 <div className="absolute inset-0 bg-[#0f1c3f]/70"></div>
-
-                {/* Content */}
                 <div className="relative text-center text-white px-4">
-                    <h1 className="text-3xl md:text-5xl font-bold mb-3">
-                        Get in Touch
-                    </h1>
+                    <h1 className="text-3xl md:text-5xl font-bold mb-3">Get in Touch</h1>
                     <p className="text-lg md:text-xl font-medium">
                         Have questions about your delivery? Our team is here to help.
                     </p>
                 </div>
             </div>
 
-            {/* Section Heading */}
             <div className="mb-10">
                 <SectionHeading
                     title="Feel Free to Write us Anytime"
@@ -50,7 +65,6 @@ const Contact = () => {
                     </div>
 
                     <div className="flex flex-col gap-6 p-8 text-white">
-                        {/* Hotline */}
                         <div className="flex items-center gap-4">
                             <div className="bg-[#1f2a4d] p-3 rounded-full">
                                 <FaPhoneAlt className="text-red-500 text-xl" />
@@ -61,7 +75,6 @@ const Contact = () => {
                             </div>
                         </div>
 
-                        {/* Email */}
                         <div className="flex items-center gap-4">
                             <div className="bg-[#1f2a4d] p-3 rounded-full">
                                 <FaEnvelope className="text-red-500 text-xl" />
@@ -72,47 +85,64 @@ const Contact = () => {
                             </div>
                         </div>
 
-                        {/* Address */}
                         <div className="flex items-center gap-4">
                             <div className="bg-[#1f2a4d] p-3 rounded-full">
                                 <FaMapMarkerAlt className="text-red-500 text-xl" />
                             </div>
                             <div>
                                 <p className="text-sm text-gray-300">Our Address</p>
-                                <p className="font-semibold">
-                                    80 mirpur Road, Mirpur, Dhaka
-                                </p>
+                                <p className="font-semibold">80 Mirpur Road, Mirpur, Dhaka</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Right Side - Contact Form */}
-                <form className="flex flex-col gap-5">
+                <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
                     <input
                         type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
                         placeholder="Your Name"
                         className="w-full p-4 rounded-lg border border-red-500 text-muted-foreground focus:outline-none focus:ring-2 focus:ring-red-500"
+                        required
                     />
                     <input
                         type="text"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
                         placeholder="Phone Number"
                         className="w-full p-4 rounded-lg border border-red-500 text-muted-foreground focus:outline-none focus:ring-2 focus:ring-red-500"
+                        required
                     />
                     <input
                         type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
                         placeholder="Email Address"
                         className="w-full p-4 rounded-lg border border-red-500 text-muted-foreground focus:outline-none focus:ring-2 focus:ring-red-500"
+                        required
                     />
                     <input
                         type="text"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
                         placeholder="Subject"
                         className="w-full p-4 rounded-lg border border-red-500 text-muted-foreground focus:outline-none focus:ring-2 focus:ring-red-500"
+                        required
                     />
                     <textarea
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
                         placeholder="Write a Message"
                         rows={5}
                         className="w-full p-4 rounded-lg border border-red-500 text-muted-foreground focus:outline-none focus:ring-2 focus:ring-red-500"
+                        required
                     />
                     <Button
                         type="submit"
@@ -122,6 +152,8 @@ const Contact = () => {
                     </Button>
                 </form>
             </div>
+
+            {/* Google Map */}
             <div className="mt-12 max-w-7xl mx-auto px-5">
                 <iframe
                     title="map"
