@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import contactPic from "@/assets/images/contact.jpg";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useCreateContactMutation } from "@/redux/features/contact/contact.api";
 
 const Contact = () => {
+    const [createContact] = useCreateContactMutation();
     const [formData, setFormData] = useState({
         name: "",
         phone: "",
@@ -18,12 +20,17 @@ const Contact = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Simulate submission
-        console.log("Form submitted:", formData);
-        toast.success("Message sent successfully!");
-        setFormData({ name: "", phone: "", email: "", subject: "", message: "" });
+        try {
+            const res = await createContact(formData).unwrap();
+            if (res.success) {
+                toast.success("Message sent successfully!");
+                setFormData({ name: "", phone: "", email: "", subject: "", message: "" });
+            };
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     return (
