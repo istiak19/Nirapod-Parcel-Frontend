@@ -43,7 +43,7 @@ export default function Navbar() {
         <div className="flex items-center gap-6">
           <Link
             to="/"
-            className="flex items-center gap-2 text-red-500 hover:text-primary/90 transition"
+            className="flex items-center gap-2 text-red-500 hover:text-red-500 transition"
           >
             <Logo className="h-8 w-8" />
             <span className="text-lg font-semibold tracking-wide">
