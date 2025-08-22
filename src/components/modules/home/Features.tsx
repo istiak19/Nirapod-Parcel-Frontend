@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Features = () => {
     return (
-        <section className="bg-gray-100 dark:bg-gray-900 py-20">
+        <section className="bg-gray-100 dark:bg-gray-900 py-16">
             <div className="max-w-7xl mx-auto px-6">
                 {/* Section Heading */}
                 <div className="text-center mb-14">

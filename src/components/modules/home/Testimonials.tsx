@@ -39,11 +39,11 @@ const Testimonials = () => {
         setCurrent((prev) => (prev + 1) % testimonialsData.length);
 
     return (
-        <section className="py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-950 overflow-hidden">
+        <section className="py-16 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-950 overflow-hidden">
             <div className="relative max-w-3xl mx-auto px-6 text-center">
                 {/* Improved Header */}
-                <h2 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                    Hear From Our Happy Customers
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    Hear From Our Happy <span className="text-red-500">Customers</span>
                 </h2>
                 <p className="text-lg text-gray-600 dark:text-gray-300 mb-12">
                     See why thousands trust Nirapod Parcel for safe, fast, and reliable delivery.

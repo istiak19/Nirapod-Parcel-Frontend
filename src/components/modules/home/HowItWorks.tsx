@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const HowItWorks = () => {
     return (
-        <section className="py-20 max-w-6xl mx-auto px-6 text-center">
+        <section className="py-16 max-w-6xl mx-auto px-6 text-center">
             {/* Heading */}
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 How It Works

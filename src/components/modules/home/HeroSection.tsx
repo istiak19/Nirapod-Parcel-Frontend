@@ -13,7 +13,7 @@ const HeroSection = () => {
                 transition={{ duration: 0.7 }}
                 className="text-center lg:text-left max-w-2xl space-y-6"
             >
-                <h1 className="text-5xl font-extrabold tracking-tight leading-tight text-gray-900 dark:text-white">
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight text-gray-900 dark:text-white">
                     Fast, Secure & Reliable <br />
                     <span className="text-red-500">Parcel Delivery in Bangladesh</span>
                 </h1>
