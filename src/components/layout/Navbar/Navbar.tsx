@@ -17,6 +17,7 @@ const navigationLinks = [
   { href: "/sender", label: "Dashboard", role: role.sender },
   { href: "/receiver", label: "Dashboard", role: role.receiver },
   { href: "/contact", label: "Contact", role: "PUBLIC" },
+  { href: "/track", label: "Track", role: "PUBLIC" },
 ]
 
 export default function Navbar() {
