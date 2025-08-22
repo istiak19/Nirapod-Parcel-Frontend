@@ -16,4 +16,4 @@ export interface SectionHeadingProps {
     align?: "left" | "center";
 };
 
-export type IRole = "Receiver" | "Admin" | "Sender"
+export type IRole = "Receiver" | "Admin" | "Sender";
