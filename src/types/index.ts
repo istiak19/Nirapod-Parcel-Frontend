@@ -17,3 +17,11 @@ export interface SectionHeadingProps {
 };
 
 export type IRole = "Receiver" | "Admin" | "Sender";
+
+export interface ITrack {
+  status: string
+  updateBy: string
+  updateAt: string
+  location: string
+  note: string
+};

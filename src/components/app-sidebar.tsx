@@ -13,9 +13,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     return (
         <Sidebar {...props}>
-            <SidebarHeader>
-                <Link to="/">
+            <SidebarHeader className="pl-5">
+                <Link to="/" className="flex items-center gap-2 text-red-500 hover:text-red-500 transition">
                     <Logo />
+                    <span className="text-lg font-semibold tracking-wide">
+                        Nirapod-Parcel
+                    </span>
                 </Link>
             </SidebarHeader>
             <SidebarContent>

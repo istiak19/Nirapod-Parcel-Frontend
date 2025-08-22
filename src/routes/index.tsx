@@ -17,7 +17,8 @@ const Register = lazy(() => import("@/pages/Auth/Register"));
 const Login = lazy(() => import("@/pages/Auth/Login"));
 const Verify = lazy(() => import("@/pages/Verify"));
 const Unauthorized = lazy(() => import("@/pages/Unauthorized"));
-const NotFound  = lazy(() => import("@/pages/NotFound"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
+const TrackingPage = lazy(() => import("@/pages/TrackingPage"));
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
             {
                 path: "/contact",
                 Component: Contact
+            },
+            {
+                path: "/track",
+                Component: TrackingPage
             },
         ]
     },
