@@ -15,3 +15,5 @@ export interface SectionHeadingProps {
     subtitle?: string;
     align?: "left" | "center";
 };
+
+export type IRole = "Receiver" | "Admin" | "Sender"
