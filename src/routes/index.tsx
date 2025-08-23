@@ -19,6 +19,7 @@ const Verify = lazy(() => import("@/pages/Verify"));
 const Unauthorized = lazy(() => import("@/pages/Unauthorized"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const TrackingPage = lazy(() => import("@/pages/TrackingPage"));
+const UpdateProfile = lazy(() => import("@/pages/updateProfile"));
 
 const router = createBrowserRouter([
     {
@@ -55,20 +56,20 @@ const router = createBrowserRouter([
     },
     {
         path: "/sender",
-        Component: withAuth(DashboardLayout, role.admin as IRole),
+        Component: withAuth(DashboardLayout, role.sender as IRole),
         children: [
             {
-                index: true, element: <Navigate to="/admin/analytics" />
+                index: true, element: <Navigate to="/sender/profile" />
             },
             ...generateRoutes(senderSidebarRoute)
         ]
     },
     {
         path: "/receiver",
-        Component: withAuth(DashboardLayout, role.admin as IRole),
+        Component: withAuth(DashboardLayout, role.receiver as IRole),
         children: [
             {
-                index: true, element: <Navigate to="/admin/analytics" />
+                index: true, element: <Navigate to="/receiver/profile" />
             },
             ...generateRoutes(receiverSidebarRoute)
         ]
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
     {
         path: "/verify",
         Component: Verify
+    },
+    {
+        path: "/profile/:id",
+        Component: UpdateProfile
     },
     {
         path: "/unauthorized",
