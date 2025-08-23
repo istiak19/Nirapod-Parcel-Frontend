@@ -56,20 +56,20 @@ const router = createBrowserRouter([
     },
     {
         path: "/sender",
-        Component: withAuth(DashboardLayout, role.admin as IRole),
+        Component: withAuth(DashboardLayout, role.sender as IRole),
         children: [
             {
-                index: true, element: <Navigate to="/admin/analytics" />
+                index: true, element: <Navigate to="/sender/profile" />
             },
             ...generateRoutes(senderSidebarRoute)
         ]
     },
     {
         path: "/receiver",
-        Component: withAuth(DashboardLayout, role.admin as IRole),
+        Component: withAuth(DashboardLayout, role.receiver as IRole),
         children: [
             {
-                index: true, element: <Navigate to="/admin/analytics" />
+                index: true, element: <Navigate to="/receiver/profile" />
             },
             ...generateRoutes(receiverSidebarRoute)
         ]

@@ -1,16 +1,17 @@
 import { useGetMeUserQuery } from "@/redux/features/user/user.api";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Mail, Phone, MapPin, Shield, CheckCircle2, XCircle, Pencil } from "lucide-react";
+import { Mail, Phone, MapPin, XCircle, Pencil, BadgeCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/Loading";
 import { Link } from "react-router";
+import { MdOutlineVerifiedUser } from "react-icons/md";
 
 const Profile = () => {
     const { data, isFetching } = useGetMeUserQuery(undefined);
 
     if (isFetching) return <Loading />;
-    if (!data) return <p className="text-center text-muted-foreground">No profile found</p>;
+    if (!data) return <p className="text-center text-red-500 italic">No profile information available.</p>;
 
     const user = data?.data;
 
@@ -25,8 +26,7 @@ const Profile = () => {
     return (
         <div className="flex justify-center px-4 py-16">
             <Card className="w-full max-w-lg rounded-xl shadow-lg border border-border bg-card transition-transform relative">
-                {/* Gradient Header */}
-                <div className="relative h-32 bg-gradient-to-r from-red-400 via-red-300 to-pink-500 dark:from-red-400 dark:via-red-300 dark:to-pink-500 rounded-t-xl">
+                <div className="relative h-32 bg-gradient-to-r from-pink-500 to-red-400 rounded-t-xl">
                     <div className="absolute top-3 right-3">
                         <Button
                             asChild
@@ -85,15 +85,22 @@ const Profile = () => {
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
-                        <Shield className="h-5 w-5 text-muted-foreground" />
+                        <BadgeCheck
+                            className={`h-6 w-6 ${user?.isBlocked === "Active"
+                                ? "text-green-500"
+                                : user?.isBlocked === "Inactive"
+                                    ? "text-yellow-500"
+                                    : "text-red-500"
+                                }`}
+                        />
                         <div>
-                            <p className="text-xs text-muted-foreground">Status</p>
+                            <p className="text-xs font-medium text-muted-foreground">Account Status</p>
                             <span
                                 className={`inline-block mt-1 px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${user?.isBlocked === "Active"
-                                    ? "bg-green-200 text-green-700 dark:bg-green-900/40 dark:text-green-400"
+                                    ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
                                     : user?.isBlocked === "Inactive"
-                                        ? "bg-yellow-200 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400"
-                                        : "bg-red-200 text-red-700 dark:bg-red-900/40 dark:text-red-400"
+                                        ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400"
+                                        : "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400"
                                     }`}
                             >
                                 {user?.isBlocked}
@@ -102,7 +109,7 @@ const Profile = () => {
                     </div>
                     <div className="flex items-center gap-3">
                         {user?.isVerified ? (
-                            <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
+                            <MdOutlineVerifiedUser className="h-5 w-5 text-green-600 dark:text-green-400" />
                         ) : (
                             <XCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
                         )}

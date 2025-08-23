@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Loading from "@/components/Loading";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const profileSchema = z.object({
     name: z.string().min(2, "Name is required"),
@@ -56,9 +57,9 @@ const UpdateProfile = () => {
 
     const onSubmit = async (values: ProfileFormValues) => {
         try {
-            const res = await updateUser({ id, userInfo: values });
-            console.log("Updated user:", res);
-            if (res?.data.success) {
+            const res = await updateUser({ id, userInfo: values }).unwrap();
+            if (res?.success) {
+                toast.success("Your profile has been updated successfully")
                 if (user?.role === "Admin") {
                     navigate("/admin/profile");
                 } else if (user?.role === "Sender") {
