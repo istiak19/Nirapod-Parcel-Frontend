@@ -19,6 +19,7 @@ const Verify = lazy(() => import("@/pages/Verify"));
 const Unauthorized = lazy(() => import("@/pages/Unauthorized"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const TrackingPage = lazy(() => import("@/pages/TrackingPage"));
+const UpdateProfile = lazy(() => import("@/pages/updateProfile"));
 
 const router = createBrowserRouter([
     {
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
     {
         path: "/verify",
         Component: Verify
+    },
+    {
+        path: "/profile/:id",
+        Component: UpdateProfile
     },
     {
         path: "/unauthorized",

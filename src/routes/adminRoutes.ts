@@ -1,9 +1,8 @@
-// import AddDivision from "@/pages/Admin/AddDivision";
-// import { lazy } from "react";
-
 import Contact from "@/pages/Contact";
+// import UpdateProfile from "@/pages/updateProfile";
+import { lazy } from "react";
 
-// const Analytics = lazy(() => import("@/pages/Admin/Analytics"));
+const Profile = lazy(() => import("@/pages/Profile"));
 // const AddTour = lazy(() => import("@/pages/Admin/AddTour"));
 // const AddTourType = lazy(() => import("@/pages/Admin/AddTourType"));
 
@@ -16,16 +15,11 @@ export const adminSidebarRoute = [
                 url: "/admin/analytics",
                 component: Contact,
             },
-            // {
-            //     title: "Add Division",
-            //     url: "/admin/add-division",
-            //     component: AddDivision,
-            // },
-            // {
-            //     title: "Add Tour",
-            //     url: "/admin/add-tour",
-            //     component: AddTour,
-            // },
+            {
+                title: "Profile",
+                url: "/admin/profile",
+                component: Profile,
+            },
             // {
             //     title: "Add Tour Type",
             //     url: "/admin/add-tour-type",

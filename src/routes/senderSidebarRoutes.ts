@@ -1,15 +1,15 @@
-// import Booking from "@/pages/User/Booking";
+import { lazy } from "react";
 
-import Contact from "@/pages/Contact";
+const Profile = lazy(() => import("@/pages/Profile"));
 
 export const senderSidebarRoute = [
     {
         title: "DashBoard",
         items: [
             {
-                title: "Booking",
-                url: "/sender/booking",
-                component: Contact
+                title: "Profile",
+                url: "/sender/profile",
+                component: Profile
             },
         ],
     },

@@ -27,7 +27,7 @@ export const userApi = baseApi.injectEndpoints({
             invalidatesTags: ["USER"],
             query: ({ id, userInfo }) => ({
                 url: `/user/${id}`,
-                method: "POST",
+                method: "PATCH",
                 data: userInfo
             })
         }),
