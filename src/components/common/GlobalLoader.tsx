@@ -1,6 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion } from "framer-motion";
+import { useAppSelector } from "@/redux/hooks";
+import type { RootState } from "@/redux/store";
 
-const Loading = () => {
+const GlobalLoader = () => {
+    const queries = useAppSelector((state: RootState) => state.baseApi.queries);
+
+    const hasLoading = Object.values(queries).some(
+        (q: any) => q?.status === "pending"
+    );
+
+    if (!hasLoading) return null;
+
     return (
         <div
             className="fixed inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm z-50"
@@ -47,4 +58,4 @@ const Loading = () => {
     );
 };
 
-export default Loading;
+export default GlobalLoader;

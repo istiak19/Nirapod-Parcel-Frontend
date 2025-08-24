@@ -28,7 +28,7 @@ export const senderApi = baseApi.injectEndpoints({
             invalidatesTags: ["PARCEL"],
             query: ({ id, parcelInfo }) => ({
                 url: `/parcels/cancel/${id}`,
-                method: "POST",
+                method: "PATCH",
                 data: parcelInfo
             })
         }),

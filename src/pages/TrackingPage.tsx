@@ -1,4 +1,3 @@
-/* eslint-disable no-unsafe-optional-chaining */
 import { useState } from "react";
 import { AlertCircle, Search } from "lucide-react";
 import { motion } from "framer-motion";
@@ -67,40 +66,34 @@ const TrackingPage = () => {
                         </div>
                     </div>
                 )}
-                {data && (
+                {data?.success && (
                     <div className="bg-white dark:bg-neutral-900 shadow-lg rounded-2xl p-6 border border-gray-200 dark:border-neutral-700 transition-colors">
                         <div className="mb-6">
                             <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Tracking Details</h2>
                             <p className="text-gray-600 dark:text-gray-400 text-sm">
-                                Parcel ID:{" "}
-                                <span className="font-medium dark:text-muted-foreground">{data?.data?._id}</span>
+                                Parcel ID: <span className="font-medium dark:text-muted-foreground">{data.data._id}</span>
                             </p>
                         </div>
                         <ul className="relative border-l-2 border-red-500 space-y-6 pl-6">
-                            {[...data?.data?.statusLogs]
-                                ?.reverse().map((log: ITrack, idx: number) => (
-                                    <li key={idx} className="relative">
-                                        <span className="absolute -left-[11px] top-1 w-5 h-5 rounded-full border-2 border-red-500 bg-white dark:bg-neutral-900 flex items-center justify-center">
-                                            <span className="w-2.5 h-2.5 bg-red-500 rounded-full"></span>
-                                        </span>
-                                        <div className="bg-gray-50 dark:bg-neutral-800 rounded-xl p-4 shadow-sm hover:shadow-2xl transition-all border-b-8">
-                                            <div className="flex justify-between items-center mb-1">
-                                                <p className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                                                    {log.status}
-                                                </p>
-                                                <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                    {new Date(log.updateAt).toLocaleString()}
-                                                </p>
-                                            </div>
-                                            <p className="text-sm text-gray-600 dark:text-gray-300">{log.location}</p>
-                                            {log.note && (
-                                                <p className="text-sm italic text-gray-500 dark:text-gray-400 mt-1">
-                                                    {log.note}
-                                                </p>
-                                            )}
+                            {[...data.data.statusLogs]?.reverse().map((log: ITrack, idx: number) => (
+                                <li key={idx} className="relative">
+                                    <span className="absolute -left-[11px] top-1 w-5 h-5 rounded-full border-2 border-red-500 bg-white dark:bg-neutral-900 flex items-center justify-center">
+                                        <span className="w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+                                    </span>
+                                    <div className="bg-gray-50 dark:bg-neutral-800 rounded-xl p-4 shadow-sm hover:shadow-2xl transition-all border-b-8">
+                                        <div className="flex justify-between items-center mb-1">
+                                            <p className="text-lg font-semibold text-gray-800 dark:text-gray-100">{log.status}</p>
+                                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                {new Date(log.updateAt).toLocaleString()}
+                                            </p>
                                         </div>
-                                    </li>
-                                ))}
+                                        <p className="text-sm text-gray-600 dark:text-gray-300">{log.location}</p>
+                                        {log.note && (
+                                            <p className="text-sm italic text-gray-500 dark:text-gray-400 mt-1">{log.note}</p>
+                                        )}
+                                    </div>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 )}
