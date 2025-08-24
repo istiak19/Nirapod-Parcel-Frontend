@@ -1,8 +1,8 @@
-import CreateParcel from "@/pages/Sender/CreateParcel";
-import SenderParcels from "@/pages/Sender/SenderParcels";
 import { lazy } from "react";
 
 const Profile = lazy(() => import("@/pages/Profile"));
+const SenderParcels = lazy(() => import("@/pages/Sender/SenderParcels"));
+const CreateParcel = lazy(() => import("@/pages/Sender/CreateParcel"));
 
 export const senderSidebarRoute = [
     {
