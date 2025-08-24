@@ -49,15 +49,7 @@ export interface IUser {
     createdAt?: Date
 };
 
-type ParcelStatus =
-    | "Requested"
-    | "Approved"
-    | "Dispatched"
-    | "In Transit"
-    | "Delivered"
-    | "Cancelled"
-    | "Returned"
-    | "Rescheduled";
+export type ParcelStatus = "Requested" | "Approved" | "Dispatched" | "In Transit" | "Delivered" | "Cancelled" | "Returned" | "Rescheduled";
 
 export interface IParcel {
     _id: string;

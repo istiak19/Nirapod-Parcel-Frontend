@@ -2,8 +2,7 @@ import { lazy } from "react";
 
 const Profile = lazy(() => import("@/pages/Profile"));
 const IncomingParcels = lazy(() => import("@/pages/Receiver/IncomingParcels"));
-const DeliveryHistory = lazy(() => import("@/pages/Receiver/DeliveryHistory"));
-const DeliveryStatus = lazy(() => import("@/pages/Receiver/DeliveryStatus"));
+const ReceiverParcels = lazy(() => import("@/pages/Receiver/ReceiverParcels"));
 
 export const receiverSidebarRoute = [
     {
@@ -20,14 +19,9 @@ export const receiverSidebarRoute = [
                 component: IncomingParcels
             },
             {
-                title: " Delivery Status",
-                url: "/receiver/delivery-status",
-                component: DeliveryStatus
-            },
-            {
-                title: "Delivery History",
-                url: "/receiver/delivery-history",
-                component: DeliveryHistory
+                title: "My Parcels",
+                url: "/receiver/receiver-parcels",
+                component: ReceiverParcels
             },
         ],
     },

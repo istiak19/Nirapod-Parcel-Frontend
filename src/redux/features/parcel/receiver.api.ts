@@ -2,6 +2,13 @@ import { baseApi } from "@/redux/baseApi";
 
 export const receiverApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
+        getParcel: builder.query({
+            providesTags: ["PARCEL"],
+            query: () => ({
+                url: "/parcels/me-receiver",
+                method: "GET"
+            })
+        }),
         incomingParcel: builder.query({
             providesTags: ["PARCEL"],
             query: () => ({
@@ -43,4 +50,4 @@ export const receiverApi = baseApi.injectEndpoints({
     })
 });
 
-export const { useIncomingParcelQuery, useHistoryParcelQuery, useRescheduleParcelMutation, useReturnParcelMutation, useDeliveredParcelMutation } = receiverApi;
+export const { useGetParcelQuery, useIncomingParcelQuery, useHistoryParcelQuery, useRescheduleParcelMutation, useReturnParcelMutation, useDeliveredParcelMutation } = receiverApi;
