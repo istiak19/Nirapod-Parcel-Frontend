@@ -10,14 +10,14 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import ErrorBoundary from './components/common/ErrorBoundary.tsx'
 import GlobalLoader from './components/common/GlobalLoader.tsx'
-import GlobalErrorHandler from './components/common/GlobalErrorHandler.tsx'
+// import GlobalErrorHandler from './components/common/GlobalErrorHandler.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Provider store={store}>
-          <GlobalErrorHandler />
+          {/* <GlobalErrorHandler /> */}
           <GlobalLoader />
           <RouterProvider router={router} />
           <ToastContainer

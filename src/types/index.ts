@@ -48,3 +48,25 @@ export interface IUser {
     parcelId?: string[];
     createdAt?: Date
 };
+
+type ParcelStatus =
+    | "Requested"
+    | "Approved"
+    | "Dispatched"
+    | "In Transit"
+    | "Delivered"
+    | "Cancelled"
+    | "Returned"
+    | "Rescheduled";
+
+export interface IParcel {
+    _id: string;
+    type: string;
+    weight: number;
+    fee: number;
+    pickupAddress: string;
+    deliveryAddress: string;
+    deliveryDate: string;
+    currentStatus: ParcelStatus;
+    statusLogs: { status: ParcelStatus; note: string; updateAt?: string }[];
+};
