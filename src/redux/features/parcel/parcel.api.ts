@@ -20,16 +20,16 @@ export const parcelApi = baseApi.injectEndpoints({
             invalidatesTags: ["PARCEL"],
             query: ({ id, parcelInfo }) => ({
                 url: `/parcels/status/${id}`,
-                method: "POST",
+                method: "PATCH",
                 data: parcelInfo
             })
         }),
         parcelBlock: builder.mutation({
             invalidatesTags: ["PARCEL"],
-            query: ({ id, parcelInfo }) => ({
+            query: ({ id, isBlocked }) => ({
                 url: `/parcels/block/${id}`,
-                method: "POST",
-                data: parcelInfo
+                method: "PATCH",
+                data: { isBlocked }
             })
         }),
     })

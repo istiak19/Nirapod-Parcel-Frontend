@@ -41,7 +41,7 @@ export interface IUser {
     picture?: string;
     address?: string;
     isDelete?: boolean;
-    isBlocked?: string;
+    isBlocked?: "Active" | "Inactive" | "Blocked";
     companyName?: string;
     isVerified?: boolean;
     auths: Auth[];
@@ -59,6 +59,14 @@ export interface IParcel {
     pickupAddress: string;
     deliveryAddress: string;
     deliveryDate: string;
+    isBlocked: boolean,
     currentStatus: ParcelStatus;
     statusLogs: { status: ParcelStatus; note: string; updateAt?: string }[];
+};
+
+export type FormData = {
+    status: string;
+    location: string;
+    note: string;
+    updatedAt?: string;
 };

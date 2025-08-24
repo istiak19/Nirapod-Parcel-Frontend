@@ -1,10 +1,9 @@
 import Contact from "@/pages/Contact";
-// import UpdateProfile from "@/pages/updateProfile";
 import { lazy } from "react";
 
 const Profile = lazy(() => import("@/pages/Profile"));
-// const AddTour = lazy(() => import("@/pages/Admin/AddTour"));
-// const AddTourType = lazy(() => import("@/pages/Admin/AddTourType"));
+const ManageUsers = lazy(() => import("@/pages/Admin/ManageUsers"));
+const ManageParcels = lazy(() => import("@/pages/Admin/ManageParcels"));
 
 export const adminSidebarRoute = [
     {
@@ -20,11 +19,16 @@ export const adminSidebarRoute = [
                 url: "/admin/profile",
                 component: Profile,
             },
-            // {
-            //     title: "Add Tour Type",
-            //     url: "/admin/add-tour-type",
-            //     component: AddTourType,
-            // },
+            {
+                title: "Manage Users",
+                url: "/admin/manage-users",
+                component: ManageUsers,
+            },
+            {
+                title: "Manage Parcels",
+                url: "/admin/manage-parcels",
+                component: ManageParcels,
+            },
         ],
     },
 ];
