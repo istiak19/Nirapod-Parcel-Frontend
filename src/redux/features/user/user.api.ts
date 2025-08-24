@@ -25,10 +25,10 @@ export const userApi = baseApi.injectEndpoints({
         }),
         updateUser: builder.mutation({
             invalidatesTags: ["USER"],
-            query: ({ id, userInfo }) => ({
+            query: ({ id, isBlocked }) => ({
                 url: `/user/${id}`,
                 method: "PATCH",
-                data: userInfo
+                data: { isBlocked }
             })
         }),
     })
