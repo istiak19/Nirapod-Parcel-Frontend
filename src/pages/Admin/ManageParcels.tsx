@@ -17,16 +17,25 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useGetMeUserQuery } from "@/redux/features/user/user.api";
 import { format } from "date-fns";
+import StatusFilter from "@/components/modules/statusFilter";
+import { useSearchParams } from "react-router";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const ManageParcels = () => {
+    const [searchParams] = useSearchParams();
+    const currentStatus = searchParams.get("currentStatus") || undefined;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [limit, setLimit] = useState<number | undefined>(10);
     const { data } = useGetMeUserQuery(undefined);
-    const { data: parcels, isLoading } = useGetAllParcelQuery(undefined);
+    const { data: parcels, isLoading } = useGetAllParcelQuery({ currentStatus, page: currentPage, limit });
     const [parcelBlock] = useParcelBlockMutation();
     const [updateParcelStatus] = useParcelStatusChangeMutation();
     const [open, setOpen] = useState(false);
     const [selectedParcel, setSelectedParcel] = useState<IParcel | null>(null);
 
     const userId = data?.data?._id;
+    const totalPage = parcels?.meta?.totalPage || 1;
 
     const handleToggleBlock = async (id: string, isBlocked: boolean) => {
         const action = isBlocked ? "Unblock" : "Block";
@@ -75,6 +84,10 @@ const ManageParcels = () => {
         }
     };
 
+    const handleClearLimit = () => {
+        setLimit(10);
+    };
+
     if (isLoading) return <Loading />;
 
     return (
@@ -82,6 +95,48 @@ const ManageParcels = () => {
             <h2 className="text-3xl font-bold text-red-500 mb-8 text-center">
                 Manage Parcels
             </h2>
+
+            <div className="mb-6 w-full">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 w-full">
+                    {/* Left: Status Filter */}
+                    <div className="w-full md:w-1/2 lg:w-1/3">
+                        <StatusFilter />
+                    </div>
+
+                    {/* Right: Results per Page */}
+                    <div className="w-full md:w-auto flex flex-col md:items-end">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-end w-full gap-4 mb-3">
+                            <h1 className="font-semibold text-gray-900 dark:text-gray-100">
+                                Results per page
+                            </h1>
+
+                            <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={handleClearLimit}
+                                className="cursor-pointer"
+                            >
+                                Reset to Default
+                            </Button>
+                        </div>
+
+                        <Select value={limit ? String(limit) : undefined} onValueChange={(value) => setLimit(Number(value))}>
+                            <SelectTrigger className="w-full md:w-40 cursor-pointer">
+                                <SelectValue placeholder="Select limit" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Limit</SelectLabel>
+                                    <SelectItem value="5">5</SelectItem>
+                                    <SelectItem value="10">10</SelectItem>
+                                    <SelectItem value="20">20</SelectItem>
+                                    <SelectItem value="50">50</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+            </div>
 
             {parcels?.data?.length === 0 ? (
                 <p className="text-gray-500 text-center text-lg">No parcels found.</p>
@@ -161,6 +216,38 @@ const ManageParcels = () => {
                             ))}
                         </TableBody>
                     </Table>
+
+                    <div className="flex justify-center mt-5">
+                        <div>
+                            <Pagination>
+                                <PaginationContent>
+                                    <PaginationItem>
+                                        <PaginationPrevious className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                                            onClick={() => setCurrentPage((prv) => prv - 1)} />
+                                    </PaginationItem>
+                                    {Array.from({ length: totalPage }, (_, index) => index + 1).map(
+                                        (page) => (
+                                            <PaginationItem
+                                                className="cursor-pointer"
+                                                key={page}
+                                                onClick={() => setCurrentPage(page)}
+                                            >
+                                                <PaginationLink isActive={currentPage === page}>
+                                                    {page}
+                                                </PaginationLink>
+                                            </PaginationItem>
+                                        )
+                                    )}
+                                    <PaginationItem>
+                                    </PaginationItem>
+                                    <PaginationItem>
+                                        <PaginationNext className={currentPage === totalPage ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                                            onClick={() => setCurrentPage((prv) => prv + 1)} />
+                                    </PaginationItem>
+                                </PaginationContent>
+                            </Pagination>
+                        </div>
+                    </div>
 
                     <div className="mt-10">
                         <h3 className="font-semibold text-lg mb-4">Delivery History</h3>

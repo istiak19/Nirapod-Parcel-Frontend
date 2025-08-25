@@ -12,9 +12,10 @@ export const senderApi = baseApi.injectEndpoints({
         }),
         getMeParcel: builder.query({
             providesTags: ["PARCEL"],
-            query: () => ({
+            query: (params) => ({
                 url: "/parcels/me",
-                method: "GET"
+                method: "GET",
+                params
             })
         }),
         getStatusParcel: builder.query({

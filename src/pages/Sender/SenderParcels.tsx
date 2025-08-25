@@ -1,17 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Loading from "@/components/Loading";
+import StatusFilter from "@/components/modules/statusFilter";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useGetMeParcelQuery, useParcelCancelMutation } from "@/redux/features/parcel/sender.api";
 import type { IParcel } from "@/types";
 import { format } from "date-fns";
+import { useState } from "react";
+import { useSearchParams } from "react-router";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 const SenderParcels = () => {
-    const { data: response, isLoading } = useGetMeParcelQuery(undefined);
+    const [searchParams] = useSearchParams();
+    const currentStatus = searchParams.get("currentStatus") || undefined;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [limit, setLimit] = useState<number | undefined>(10);
+    const { data, isLoading } = useGetMeParcelQuery({ currentStatus, page: currentPage, limit });
     const [cancelParcel] = useParcelCancelMutation();
-    const parcels: IParcel[] = Array.isArray(response) ? response : response?.data ?? [];
+    const parcels: IParcel[] = data?.data?.parcel ?? [];
+    const totalPage = data?.meta?.totalPage || 1;
 
     const handleCancel = async (id: string) => {
         try {
@@ -46,12 +56,58 @@ const SenderParcels = () => {
         }
     };
 
+    const handleClearLimit = () => {
+        setLimit(10);
+    };
+
     if (isLoading) return <Loading />;
     // if (isError) return <p className="text-center mt-10 text-red-500">Failed to load parcels.</p>;
 
     return (
         <div className="container mx-auto p-8 my-16 bg-white dark:bg-neutral-900 rounded-3xl shadow-lg">
             <h2 className="text-3xl font-bold text-red-600 mb-8 text-center">My Parcels</h2>
+
+            <div className="mb-6 w-full">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 w-full">
+                    {/* Left: Status Filter */}
+                    <div className="w-full md:w-1/2 lg:w-1/3">
+                        <StatusFilter />
+                    </div>
+
+                    {/* Right: Results per Page */}
+                    <div className="w-full md:w-auto flex flex-col md:items-end">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-end w-full gap-4 mb-3">
+                            <h1 className="font-semibold text-gray-900 dark:text-gray-100">
+                                Results per page
+                            </h1>
+
+                            <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={handleClearLimit}
+                                className="cursor-pointer"
+                            >
+                                Reset to Default
+                            </Button>
+                        </div>
+
+                        <Select value={limit ? String(limit) : undefined} onValueChange={(value) => setLimit(Number(value))}>
+                            <SelectTrigger className="w-full md:w-40 cursor-pointer">
+                                <SelectValue placeholder="Select limit" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Limit</SelectLabel>
+                                    <SelectItem value="5">5</SelectItem>
+                                    <SelectItem value="10">10</SelectItem>
+                                    <SelectItem value="20">20</SelectItem>
+                                    <SelectItem value="50">50</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+            </div>
 
             {parcels.length === 0 ? (
                 <p className="text-gray-500 text-center text-lg">No parcels found.</p>
@@ -117,6 +173,39 @@ const SenderParcels = () => {
                                 })}
                             </TableBody>
                         </Table>
+
+                        <div className="flex justify-center mt-5">
+                            <div>
+                                <Pagination>
+                                    <PaginationContent>
+                                        <PaginationItem>
+                                            <PaginationPrevious className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                                                onClick={() => setCurrentPage((prv) => prv - 1)} />
+                                        </PaginationItem>
+                                        {Array.from({ length: totalPage }, (_, index) => index + 1).map(
+                                            (page) => (
+                                                <PaginationItem
+                                                    className="cursor-pointer"
+                                                    key={page}
+                                                    onClick={() => setCurrentPage(page)}
+                                                >
+                                                    <PaginationLink isActive={currentPage === page}>
+                                                        {page}
+                                                    </PaginationLink>
+                                                </PaginationItem>
+                                            )
+                                        )}
+                                        <PaginationItem>
+                                        </PaginationItem>
+                                        <PaginationItem>
+                                            <PaginationNext className={currentPage === totalPage ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                                                onClick={() => setCurrentPage((prv) => prv + 1)} />
+                                        </PaginationItem>
+                                    </PaginationContent>
+                                </Pagination>
+                            </div>
+                        </div>
+
                     </div>
                     <div className="mt-10">
                         <h3 className="font-semibold text-lg mb-4">Delivery History</h3>
@@ -144,10 +233,10 @@ const SenderParcels = () => {
                                             </h4>
                                             <span
                                                 className={`px-3 py-1 text-sm font-medium rounded-full ${parcel.currentStatus === "Delivered"
-                                                        ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300"
-                                                        : parcel.currentStatus === "Cancelled"
-                                                            ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300"
-                                                            : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300"
+                                                    ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300"
+                                                    : parcel.currentStatus === "Cancelled"
+                                                        ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300"
+                                                        : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300"
                                                     }`}
                                             >
                                                 {parcel.currentStatus}
