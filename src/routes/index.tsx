@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         Component: withAuth(DashboardLayout, role.admin as IRole),
         children: [
             {
-                index: true, element: <Navigate to="/admin/analytics" />
+                index: true, element: <Navigate to="/admin/admin-analytics" />
             },
             ...generateRoutes(adminSidebarRoute)
         ]
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
         Component: withAuth(DashboardLayout, role.sender as IRole),
         children: [
             {
-                index: true, element: <Navigate to="/sender/profile" />
+                index: true, element: <Navigate to="/sender/sender-analytics" />
             },
             ...generateRoutes(senderSidebarRoute)
         ]
@@ -69,7 +69,7 @@ const router = createBrowserRouter([
         Component: withAuth(DashboardLayout, role.receiver as IRole),
         children: [
             {
-                index: true, element: <Navigate to="/receiver/profile" />
+                index: true, element: <Navigate to="/receiver/receiver-analytics" />
             },
             ...generateRoutes(receiverSidebarRoute)
         ]

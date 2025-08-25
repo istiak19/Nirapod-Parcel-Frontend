@@ -1,9 +1,9 @@
-import Contact from "@/pages/Contact";
 import { lazy } from "react";
 
 const Profile = lazy(() => import("@/pages/Profile"));
 const ManageUsers = lazy(() => import("@/pages/Admin/ManageUsers"));
 const ManageParcels = lazy(() => import("@/pages/Admin/ManageParcels"));
+const AdminAnalytics = lazy(() => import("@/pages/Admin/AdminAnalytics"));
 
 export const adminSidebarRoute = [
     {
@@ -11,8 +11,8 @@ export const adminSidebarRoute = [
         items: [
             {
                 title: "Analytics",
-                url: "/admin/analytics",
-                component: Contact,
+                url: "/admin/admin-analytics",
+                component: AdminAnalytics,
             },
             {
                 title: "Profile",

@@ -62,6 +62,7 @@ export interface IParcel {
     isBlocked: boolean,
     currentStatus: ParcelStatus;
     statusLogs: { status: ParcelStatus; note: string; updateAt?: string }[];
+    createdAt?: string;
 };
 
 export type FormData = {
@@ -69,4 +70,30 @@ export type FormData = {
     location: string;
     note: string;
     updatedAt?: string;
+};
+
+export interface StatusLog {
+    status: ParcelStatus;
+    timestamp: string;
+};
+
+export interface Parcel {
+    id: string;
+    currentStatus: ParcelStatus;
+    createdAt: Date;
+    statusLogs?: StatusLog[];
+};
+
+export interface ChartsProps {
+  parcels: Parcel[];
+};
+
+export interface OverviewCardsProps {
+    total: number;
+    requested: number;
+    approved: number;
+    dispatched: number;
+    delivered: number;
+    inTransit: number;
+    cancelled: number;
 };
