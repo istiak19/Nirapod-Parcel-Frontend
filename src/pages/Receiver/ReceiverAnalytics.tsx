@@ -8,7 +8,7 @@ const ReceiverAnalytics = () => {
     const { data, isLoading } = useGetParcelQuery(undefined);
     const parcels: Parcel[] = data?.data || [];
 
-    const total = data?.meta?.total;
+    const total = parcels.length;
     const requested = parcels.filter((p) => p.currentStatus === "Requested").length;
     const approved = parcels.filter((p) => p.currentStatus === "Approved").length;
     const dispatched = parcels.filter((p) => p.currentStatus === "Dispatched").length;

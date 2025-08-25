@@ -121,8 +121,14 @@ const ReceiverParcels = () => {
                         <div className="space-y-6">
                             {[...parcels]
                                 .sort((a, b) => {
-                                    const aLatest = new Date(a.statusLogs[a.statusLogs.length - 1]?.updateAt || 0).getTime();
-                                    const bLatest = new Date(b.statusLogs[b.statusLogs.length - 1]?.updateAt || 0).getTime();
+                                    const aLogs = a.statusLogs;
+                                    const bLogs = b.statusLogs;
+                                    const aLatest = aLogs.length
+                                        ? new Date(aLogs[aLogs.length - 1]?.updateAt ?? 0).getTime()
+                                        : 0;
+                                    const bLatest = bLogs.length
+                                        ? new Date(bLogs[bLogs.length - 1]?.updateAt ?? 0).getTime()
+                                        : 0;
                                     return bLatest - aLatest;
                                 })
                                 .map((parcel) => (
@@ -131,35 +137,50 @@ const ReceiverParcels = () => {
                                         className="p-6 rounded-2xl bg-white dark:bg-neutral-900 shadow-md border border-gray-200 dark:border-neutral-700 hover:shadow-lg transition-shadow duration-300"
                                     >
                                         <div className="flex items-center justify-between mb-4">
-                                            <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{parcel.type}</h4>
+                                            <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                                                {parcel.type}
+                                            </h4>
                                             <span
                                                 className={`px-3 py-1 text-sm font-medium rounded-full ${parcel.currentStatus === "Delivered"
-                                                    ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300"
-                                                    : parcel.currentStatus === "Cancelled"
-                                                        ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300"
-                                                        : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300"
+                                                        ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300"
+                                                        : parcel.currentStatus === "Cancelled"
+                                                            ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300"
+                                                            : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300"
                                                     }`}
                                             >
                                                 {parcel.currentStatus}
                                             </span>
                                         </div>
+
                                         <div className="space-y-3">
-                                            {parcel.statusLogs.map((log, idx) => (
-                                                <div key={idx} className="flex items-start gap-3">
-                                                    <div className="flex-shrink-0 w-3 h-3 mt-1.5 rounded-full bg-blue-500"></div>
-                                                    <div>
-                                                        <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                                                            {log.status}
-                                                            {log.updateAt && (
-                                                                <span className="ml-2 text-xs text-gray-500">
-                                                                    {format(new Date(log.updateAt), "PPP p")}
-                                                                </span>
-                                                            )}
-                                                        </p>
-                                                        <p className="text-gray-700 dark:text-gray-300 text-sm">{log.note}</p>
+                                            {parcel.statusLogs
+                                                .slice()
+                                                .sort(
+                                                    (a, b) =>
+                                                        new Date(b.updateAt ?? 0).getTime() -
+                                                        new Date(a.updateAt ?? 0).getTime()
+                                                )
+                                                .map((log, idx) => (
+                                                    <div key={idx} className="flex items-start gap-3">
+                                                        <div className="flex-shrink-0 w-3 h-3 mt-1.5 rounded-full bg-blue-500"></div>
+                                                        <div>
+                                                            <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                                                                {log.status}
+                                                                {log.updateAt && (
+                                                                    <span className="ml-2 text-xs text-gray-500">
+                                                                        {format(
+                                                                            new Date(log.updateAt),
+                                                                            "PPP p"
+                                                                        )}
+                                                                    </span>
+                                                                )}
+                                                            </p>
+                                                            <p className="text-gray-700 dark:text-gray-300 text-sm">
+                                                                {log.note}
+                                                            </p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            ))}
+                                                ))}
                                         </div>
                                     </div>
                                 ))}

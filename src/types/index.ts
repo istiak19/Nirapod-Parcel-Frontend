@@ -51,6 +51,14 @@ export interface IUser {
 
 export type ParcelStatus = "Requested" | "Approved" | "Dispatched" | "In Transit" | "Delivered" | "Cancelled" | "Returned" | "Rescheduled";
 
+export interface IStatusLog {
+    status: ParcelStatus;
+    note: string;
+    updateAt?: string;
+    location?: string;
+    updateBy?: string;
+};
+
 export interface IParcel {
     _id: string;
     type: string;
@@ -59,9 +67,9 @@ export interface IParcel {
     pickupAddress: string;
     deliveryAddress: string;
     deliveryDate: string;
-    isBlocked: boolean,
+    isBlocked: boolean;
     currentStatus: ParcelStatus;
-    statusLogs: { status: ParcelStatus; note: string; updateAt?: string }[];
+    statusLogs: IStatusLog[];
     createdAt?: string;
 };
 
@@ -85,7 +93,7 @@ export interface Parcel {
 };
 
 export interface ChartsProps {
-  parcels: Parcel[];
+    parcels: Parcel[];
 };
 
 export interface OverviewCardsProps {

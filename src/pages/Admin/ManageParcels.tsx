@@ -11,15 +11,12 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import {
-    useGetAllParcelQuery,
-    useParcelBlockMutation,
-    useParcelStatusChangeMutation,
-} from "@/redux/features/parcel/parcel.api";
-import type { IParcel } from "@/types";
+import { useGetAllParcelQuery, useParcelBlockMutation, useParcelStatusChangeMutation, } from "@/redux/features/parcel/parcel.api";
+import type { IParcel, IStatusLog } from "@/types";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useGetMeUserQuery } from "@/redux/features/user/user.api";
+import { format } from "date-fns";
 
 const ManageParcels = () => {
     const { data } = useGetMeUserQuery(undefined);
@@ -30,6 +27,7 @@ const ManageParcels = () => {
     const [selectedParcel, setSelectedParcel] = useState<IParcel | null>(null);
 
     const userId = data?.data?._id;
+
     const handleToggleBlock = async (id: string, isBlocked: boolean) => {
         const action = isBlocked ? "Unblock" : "Block";
 
@@ -80,7 +78,7 @@ const ManageParcels = () => {
     if (isLoading) return <Loading />;
 
     return (
-        <div className="container mx-auto p-8 my-16 bg-white dark:bg-neutral-900 rounded-3xl shadow-lg">
+        <div className="container mx-auto p-8 my-10 bg-white dark:bg-neutral-900 rounded-3xl shadow-lg">
             <h2 className="text-3xl font-bold text-red-500 mb-8 text-center">
                 Manage Parcels
             </h2>
@@ -163,6 +161,77 @@ const ManageParcels = () => {
                             ))}
                         </TableBody>
                     </Table>
+
+                    <div className="mt-10">
+                        <h3 className="font-semibold text-lg mb-4">Delivery History</h3>
+                        <div className="space-y-6">
+                            {[...(parcels?.data || [])]
+                                .sort((a: IParcel, b: IParcel) => {
+                                    const aLogs = a.statusLogs;
+                                    const bLogs = b.statusLogs;
+                                    const aLatest = aLogs.length
+                                        ? new Date(aLogs[aLogs.length - 1]?.updateAt ?? 0).getTime()
+                                        : 0;
+                                    const bLatest = bLogs.length
+                                        ? new Date(bLogs[bLogs.length - 1]?.updateAt ?? 0).getTime()
+                                        : 0;
+                                    return bLatest - aLatest;
+                                })
+                                .map((parcel: IParcel) => (
+                                    <div
+                                        key={parcel._id}
+                                        className="p-6 rounded-2xl bg-white dark:bg-neutral-900 shadow-md border border-gray-200 dark:border-neutral-700 hover:shadow-lg transition-shadow duration-300"
+                                    >
+                                        <div className="flex items-center justify-between mb-4">
+                                            <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                                                {parcel.type}
+                                            </h4>
+                                            <span
+                                                className={`px-3 py-1 text-sm font-medium rounded-full ${parcel.currentStatus === "Delivered"
+                                                    ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300"
+                                                    : parcel.currentStatus === "Cancelled"
+                                                        ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300"
+                                                        : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300"
+                                                    }`}
+                                            >
+                                                {parcel.currentStatus}
+                                            </span>
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            {parcel.statusLogs
+                                                .slice()
+                                                .sort(
+                                                    (a: IStatusLog, b: IStatusLog) =>
+                                                        new Date(b.updateAt ?? 0).getTime() -
+                                                        new Date(a.updateAt ?? 0).getTime()
+                                                )
+                                                .map((log: IStatusLog, idx: number) => (
+                                                    <div key={idx} className="flex items-start gap-3">
+                                                        <div className="flex-shrink-0 w-3 h-3 mt-1.5 rounded-full bg-blue-500"></div>
+                                                        <div>
+                                                            <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                                                                {log.status}
+                                                                {log.updateAt && (
+                                                                    <span className="ml-2 text-xs text-gray-500">
+                                                                        {format(
+                                                                            new Date(log.updateAt),
+                                                                            "PPP p"
+                                                                        )}
+                                                                    </span>
+                                                                )}
+                                                            </p>
+                                                            <p className="text-gray-700 dark:text-gray-300 text-sm">
+                                                                {log.note}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                        </div>
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
                 </div>
             )}
 
