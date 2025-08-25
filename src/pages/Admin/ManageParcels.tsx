@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Loading from "@/components/Loading";
-import StatusUpdateModal from "@/components/modules/admin/statusUpdateModal";
+import StatusUpdateModal from "@/components/modules/shared/statusUpdateModal";
 import { Button } from "@/components/ui/button";
 import {
     Table,
@@ -30,8 +30,6 @@ const ManageParcels = () => {
     const [selectedParcel, setSelectedParcel] = useState<IParcel | null>(null);
 
     const userId = data?.data?._id;
-
-    // 🔹 Block / Unblock
     const handleToggleBlock = async (id: string, isBlocked: boolean) => {
         const action = isBlocked ? "Unblock" : "Block";
 
