@@ -1,69 +1,167 @@
-# React + TypeScript + Vite
+# 📦 Nirapod Parcel
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Nirapod Parcel is a robust, role-based React application built with TypeScript, Redux Toolkit, and RTK Query, designed to provide a seamless and secure parcel management experience. It features dynamic dashboards, visual analytics, and responsive UI tailored for **Senders, Receivers, and Admins**. Users can track parcels, manage deliveries, update statuses, and view detailed logs in real time. With role-specific navigation, API integration, and accessibility-focused design, Nirapod delivers a professional, user-friendly, and performant solution for modern parcel delivery operations.
 
-Currently, two official plugins are available:
+🔗 **Live Demo**: [nirapod-parcel.netlify.app](https://nirapod-parcel.netlify.app/)
+🔗 **Backend API**: [nirapod-parcel-backend.vercel.app](https://nirapod-parcel-backend.vercel.app/)
+🔗 **Frontend Repo**: [Nirapod-Parcel-Frontend](https://github.com/istiak19/Nirapod-Parcel-Frontend)
+🔗 **Backend Repo**: [Nirapod-Parcel-Backend](https://github.com/istiak19/Nirapod-Parcel-Backend)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 📑 Table of Contents
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* [Introduction](#-introduction)
+* [Features](#-features)
+* [Project Structure](#-project-structure)
+* [Tech Stack](#-tech-stack)
+* [Installation](#-installation)
+* [Usage](#-usage)
+* [Configuration](#-configuration)
+* [Examples](#-examples)
+* [Troubleshooting](#-troubleshooting)
+* [Contributors](#-contributors)
+* [License](#-license)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 🚀 Introduction
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+**Nirapod Parcel** is a modern parcel delivery management system with:
+
+* Role-based dashboards (Sender, Receiver, Admin)
+* Real-time parcel tracking
+* Status updates & delivery logs
+* Secure authentication & team switching
+* Analytics & reporting with visual charts
+* Accessibility-focused, mobile-friendly UI
+
+---
+
+## ✨ Features
+
+* 🔐 **Role-based access**: Separate features for users and admins
+* 📊 **Dynamic dashboards**: Analytics and parcel history visualization with **Recharts**
+* 🌓 **Dark/Light mode toggle** for accessibility
+* 🔄 **Real-time updates** using RTK Query
+* 📂 **File & image upload support**
+* 🧩 **Reusable UI components** powered by Radix UI + TailwindCSS
+* ⚡ **Optimized performance** with React 19 and Vite
+
+---
+
+## 📂 Project Structure
+
+```bash
+src/
+├── assets/         # Static files (images, icons, fonts)
+├── components/     # Reusable UI components
+│   ├── common/     # Shared components
+│   ├── layout/     # Layout (header, footer, sidebar)
+│   ├── modules/    # Feature-specific components
+│   ├── ui/         # Styled UI components
+│   ├── app-sidebar.tsx
+│   ├── Loading.tsx
+│   ├── Mode-toggle.tsx
+│   ├── nav-main.tsx
+│   ├── nav-projects.tsx
+│   ├── nav-user.tsx
+│   ├── SectionHeading.tsx
+│   ├── singleImageUpload.tsx
+│   └── team-switcher.tsx
+├── config/         # Environment & API configs
+├── constants/      # App-wide constants
+├── context/        # React context providers
+├── hooks/          # Custom hooks
+├── lib/            # Utilities & helper functions
+├── pages/          # Pages / routes
+├── redux/          # Redux store, slices, reducers
+├── routes/         # Centralized routes
+├── types/          # TypeScript types/interfaces
+├── utils/          # Helper functions
+├── App.tsx         # Root component
+├── main.tsx        # App entry (Vite)
+└── index.css       # Global styles
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🛠️ Tech Stack
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+* **Framework:** [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
+* **Language:** [TypeScript](https://www.typescriptlang.org/)
+* **State Management:** [Redux Toolkit](https://redux-toolkit.js.org/) + [RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
+* **UI & Styling:** [TailwindCSS](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), [Framer Motion](https://www.framer.com/motion/)
+* **Forms & Validation:** [React Hook Form](https://react-hook-form.com/), [Zod](https://zod.dev/), [@hookform/resolvers](https://github.com/react-hook-form/resolvers)
+* **Charts & Analytics:** [Recharts](https://recharts.org/)
+* **API Requests:** [Axios](https://axios-http.com/)
+* **Notifications & Alerts:** [React Toastify](https://fkhadra.github.io/react-toastify/), [SweetAlert2](https://sweetalert2.github.io/)
+
+---
+
+## ⚙️ Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/istiak19/Nirapod-Parcel-Frontend.git
+
+# Navigate to the project
+cd Nirapod-Parcel-Frontend
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
+
+---
+
+## ▶️ Usage
+
+* Visit `http://localhost:5173` after running `npm run dev`.
+* Login as a **Sender, Receiver, or Admin** (credentials configured in backend).
+* Access role-based features like:
+
+  * Parcel creation & tracking
+  * Delivery management & updates
+  * Analytics dashboard
+
+---
+
+## 🔧 Configuration
+
+Create a `.env` file at the project root with:
+
+```env
+VITE_API_BASE_URL=https://nirapod-parcel-backend.vercel.app/api
+```
+
+Adjust the URL based on your backend environment (local / staging / production).
+
+---
+
+## 💡 Examples
+
+* **Sender**: Create and track parcels in real-time.
+* **Receiver**: Get notified when parcels are in transit or delivered.
+* **Admin**: Manage all parcels, update statuses, and view analytics.
+
+---
+
+## 🛠 Troubleshooting
+
+* If Tailwind styles don’t apply, ensure `tailwind.config.js` is properly set up.
+* Check API connectivity by verifying the `VITE_API_BASE_URL`.
+* For type issues, run:
+
+  ```bash
+  npm run lint
+  npm run build
+  ```
+
+---
+
+## 👨‍💻 Contributors
+
+* [**Istiak Ahmed**](https://github.com/istiak19) – Developer & Maintainer
