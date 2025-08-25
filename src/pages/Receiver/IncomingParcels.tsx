@@ -22,6 +22,7 @@ const statusColor = (status: string) => {
 
 const IncomingParcels = () => {
     const { data, isFetching } = useIncomingParcelQuery(undefined);
+    console.log(data)
 
     if (isFetching) return <Loading />;
     // if (isError)

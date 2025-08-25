@@ -4,9 +4,10 @@ export const receiverApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getParcel: builder.query({
             providesTags: ["PARCEL"],
-            query: () => ({
+            query: (params) => ({
                 url: "/parcels/me-receiver",
-                method: "GET"
+                method: "GET",
+                params
             })
         }),
         incomingParcel: builder.query({
