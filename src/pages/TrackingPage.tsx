@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useTrackQuery } from "@/redux/features/parcel/parcel.api";
 import Loading from "@/components/Loading";
 import type { ITrack } from "@/types";
+import { Helmet } from "react-helmet-async";
 
 const TrackingPage = () => {
     const [trackingNumber, setTrackingNumber] = useState("");
@@ -20,6 +21,11 @@ const TrackingPage = () => {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen p-6">
+            <Helmet>
+                <title>Tracking | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel tracking page" />
+            </Helmet>
+            
             <motion.h1
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}

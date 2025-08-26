@@ -3,6 +3,7 @@ import { Charts } from "@/components/modules/shared/charts";
 import OverviewCards from "@/components/modules/shared/overviewCards";
 import { useGetParcelQuery } from "@/redux/features/parcel/receiver.api";
 import type { Parcel } from "@/types";
+import { Helmet } from "react-helmet-async";
 
 const ReceiverAnalytics = () => {
     const { data, isLoading } = useGetParcelQuery(undefined);
@@ -20,6 +21,11 @@ const ReceiverAnalytics = () => {
 
     return (
         <div className="space-y-8 py-10">
+            <Helmet>
+                <title>Receiver Dashboard | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel receiver dashboard page" />
+            </Helmet>
+
             <section>
                 <h2 className="text-2xl font-bold mb-4">Parcel Overview</h2>
                 <OverviewCards

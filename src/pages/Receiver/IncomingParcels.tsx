@@ -4,6 +4,7 @@ import { Package, MapPin, User, Calendar, BadgeCheck, Phone, Mail } from "lucide
 import Loading from "@/components/Loading";
 import { useIncomingParcelQuery } from "@/redux/features/parcel/receiver.api";
 import clsx from "clsx";
+import { Helmet } from "react-helmet-async";
 
 const statusColor = (status: string) => {
     switch (status) {
@@ -22,7 +23,6 @@ const statusColor = (status: string) => {
 
 const IncomingParcels = () => {
     const { data, isFetching } = useIncomingParcelQuery(undefined);
-    console.log(data)
 
     if (isFetching) return <Loading />;
     // if (isError)
@@ -31,6 +31,11 @@ const IncomingParcels = () => {
     const parcels = data?.data || [];
     return (
         <div className="p-4 container mx-auto">
+            <Helmet>
+                <title>Incoming Parcels | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel incoming parcels page" />
+            </Helmet>
+
             <motion.h1
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}

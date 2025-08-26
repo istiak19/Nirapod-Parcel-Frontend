@@ -21,14 +21,17 @@ import StatusFilter from "@/components/modules/statusFilter";
 import { useSearchParams } from "react-router";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Search from "@/components/Search";
+import { Helmet } from "react-helmet-async";
 
 const ManageParcels = () => {
     const [searchParams] = useSearchParams();
     const currentStatus = searchParams.get("currentStatus") || undefined;
     const [currentPage, setCurrentPage] = useState(1);
+    const [search, setSearch] = useState("");
     const [limit, setLimit] = useState<number | undefined>(10);
     const { data } = useGetMeUserQuery(undefined);
-    const { data: parcels, isLoading } = useGetAllParcelQuery({ currentStatus, page: currentPage, limit });
+    const { data: parcels, isLoading } = useGetAllParcelQuery({ currentStatus, page: currentPage, limit, search });
     const [parcelBlock] = useParcelBlockMutation();
     const [updateParcelStatus] = useParcelStatusChangeMutation();
     const [open, setOpen] = useState(false);
@@ -92,18 +95,31 @@ const ManageParcels = () => {
 
     return (
         <div className="container mx-auto p-8 my-10 bg-white dark:bg-neutral-900 rounded-3xl shadow-lg">
+            <Helmet>
+                <title>Manage Parcels | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel manage parcels page" />
+            </Helmet>
+
             <h2 className="text-3xl font-bold text-red-500 mb-8 text-center">
                 Manage Parcels
             </h2>
 
             <div className="mb-6 w-full">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 w-full">
-                    {/* Left: Status Filter */}
+
                     <div className="w-full md:w-1/2 lg:w-1/3">
                         <StatusFilter />
                     </div>
 
-                    {/* Right: Results per Page */}
+                    <div className="w-full md:w-1/3">
+                        <Search
+                            onSearch={(value) => {
+                                setSearch(value);
+                                setCurrentPage(1);
+                            }}
+                        />
+                    </div>
+
                     <div className="w-full md:w-auto flex flex-col md:items-end">
                         <div className="flex flex-col md:flex-row md:items-center md:justify-end w-full gap-4 mb-3">
                             <h1 className="font-semibold text-gray-900 dark:text-gray-100">

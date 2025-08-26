@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Search from "@/components/Search";
+import { Helmet } from "react-helmet-async";
 
 const getStatusBadgeClass = (status: ParcelStatus) => {
     switch (status) {
@@ -31,8 +33,9 @@ const ReceiverParcels = () => {
     const [searchParams] = useSearchParams();
     const currentStatus = searchParams.get("currentStatus") || undefined;
     const [currentPage, setCurrentPage] = useState(1);
+    const [search, setSearch] = useState("");
     const [limit, setLimit] = useState<number | undefined>(10);
-    const { data: parcelsResponse, isLoading } = useGetParcelQuery({ currentStatus, page: currentPage, limit });
+    const { data: parcelsResponse, isLoading } = useGetParcelQuery({ currentStatus, page: currentPage, limit, search });
     const [confirmDelivery] = useDeliveredParcelMutation();
 
     const parcels: IParcel[] = Array.isArray(parcelsResponse?.data?.parcel) ? parcelsResponse.data.parcel : [];
@@ -82,16 +85,29 @@ const ReceiverParcels = () => {
 
     return (
         <div className="container mx-auto p-6 my-16 bg-white dark:bg-neutral-900 rounded-2xl shadow-md">
+            <Helmet>
+                <title>Receiver Parcels | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel receiver parcels page" />
+            </Helmet>
+
             <h2 className="text-2xl font-bold text-red-500 mb-6 text-center">My Parcels</h2>
 
             <div className="mb-6 w-full">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 w-full">
-                    {/* Left: Status Filter */}
+
                     <div className="w-full md:w-1/2 lg:w-1/3">
                         <StatusFilter />
                     </div>
 
-                    {/* Right: Results per Page */}
+                    <div className="w-full md:w-1/3">
+                        <Search
+                            onSearch={(value) => {
+                                setSearch(value);
+                                setCurrentPage(1);
+                            }}
+                        />
+                    </div>
+
                     <div className="w-full md:w-auto flex flex-col md:items-end">
                         <div className="flex flex-col md:flex-row md:items-center md:justify-end w-full gap-4 mb-3">
                             <h1 className="font-semibold text-gray-900 dark:text-gray-100">

@@ -36,7 +36,7 @@ const DeliveryHistory = () => {
                             transition={{ delay: index * 0.05 }}
                             className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col"
                         >
-                            {/* Header */}
+
                             <div className="px-6 py-4 flex items-center justify-between border-b border-gray-100 dark:border-neutral-800">
                                 <p className="font-semibold text-gray-800 dark:text-gray-200 text-lg md:text-xl">
                                     {parcel.trackingId}

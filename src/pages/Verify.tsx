@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import ParcelRegister from "@/assets/images/contact.jpg";
 import Logo from "@/assets/icons/Logo";
+import { Helmet } from "react-helmet-async";
 
 const Verify = () => {
     const location = useLocation();
@@ -80,7 +81,11 @@ const Verify = () => {
 
     return (
         <div className="flex min-h-screen">
-            {/* Left Image Section */}
+            <Helmet>
+                <title>Verify | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel verify page" />
+            </Helmet>
+
             <div className="relative hidden lg:block w-1/2">
                 <img
                     src={ParcelRegister}
@@ -112,7 +117,6 @@ const Verify = () => {
                 </motion.div>
             </div>
 
-            {/* OTP Verification Form */}
             <div className="flex justify-center items-center w-full lg:w-1/2 bg-muted px-4">
                 {confirm ? (
                     <Card className="w-full max-w-md shadow-lg rounded-2xl p-6 border border-red-300">

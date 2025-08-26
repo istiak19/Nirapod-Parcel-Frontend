@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useGetAllUserQuery, useUpdateUserMutation } from "@/redux/features/user/user.api";
 import type { IUser } from "@/types";
+import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
@@ -37,6 +38,11 @@ const ManageUsers = () => {
 
     return (
         <div className="container mx-auto p-8 my-16 bg-white dark:bg-neutral-900 rounded-3xl shadow-lg">
+            <Helmet>
+                <title>Manage Users | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel manage users page" />
+            </Helmet>
+
             <h2 className="text-3xl font-bold text-red-600 mb-8 text-center">Manage Users</h2>
 
             {users?.data?.length === 0 ? (

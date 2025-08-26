@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import Loading from "@/components/Loading";
 import { Link } from "react-router";
 import { MdOutlineVerifiedUser } from "react-icons/md";
+import { Helmet } from "react-helmet-async";
 
 const Profile = () => {
     const { data, isFetching } = useGetMeUserQuery(undefined);
@@ -25,6 +26,11 @@ const Profile = () => {
 
     return (
         <div className="flex justify-center px-4 py-16">
+            <Helmet>
+                <title>Profile | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel profile page" />
+            </Helmet>
+            
             <Card className="w-full max-w-lg rounded-xl shadow-lg border border-border bg-card transition-transform relative">
                 <div className="relative h-32 bg-gradient-to-r from-pink-500 to-red-400 rounded-t-xl">
                     <div className="absolute top-3 right-3">

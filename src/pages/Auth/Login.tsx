@@ -2,11 +2,16 @@ import Logo from "@/assets/icons/Logo";
 import { Link } from "react-router";
 import ParcelLogin from "@/assets/images/Login.jpg";
 import LoginForm from "@/components/modules/auth/LoginForm";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
     return (
         <div className="grid min-h-screen lg:grid-cols-2 bg-background">
-            {/* Left Image Section */}
+            <Helmet>
+                <title>Login | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel login page" />
+            </Helmet>
+
             <div className="relative hidden lg:block">
                 <img
                     src={ParcelLogin}
@@ -22,9 +27,7 @@ const Login = () => {
                 </div>
             </div>
 
-            {/* Right Form Section */}
             <div className="flex flex-col justify-center px-6 py-10 sm:px-8 md:px-16 bg-background">
-                {/* Logo */}
                 <div className="mb-10 flex justify-center md:justify-start">
                     <Link
                         to="/"
@@ -37,10 +40,9 @@ const Login = () => {
                     </Link>
                 </div>
 
-                {/* Form Card */}
                 <div className="mx-auto w-full max-w-md">
                     <div className="rounded-2xl border border-border bg-card p-8 shadow-lg">
-                        <LoginForm/>
+                        <LoginForm />
                     </div>
                 </div>
             </div>

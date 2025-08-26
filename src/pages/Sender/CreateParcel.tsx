@@ -24,6 +24,7 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useCreateParcelMutation } from "@/redux/features/parcel/sender.api";
+import { Helmet } from "react-helmet-async";
 
 // ✅ Zod Schema (use Date instead of string)
 const parcelSchema = z.object({
@@ -87,6 +88,11 @@ const CreateParcel = () => {
 
     return (
         <div className="max-w-4xl mx-auto p-5 my-16 bg-white dark:bg-neutral-900 rounded-2xl shadow-md w-full">
+            <Helmet>
+                <title>Create Parcel | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel create parcel page" />
+            </Helmet>
+
             <h2 className="text-2xl font-bold text-red-500 mb-6 text-center">
                 New Parcel Request
             </h2>

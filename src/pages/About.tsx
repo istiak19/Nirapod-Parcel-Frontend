@@ -4,11 +4,16 @@ import teamPic1 from "@/assets/images/team-1.jpg";
 import teamPic2 from "@/assets/images/team-2.jpg";
 import teamPic4 from "@/assets/images/team-3.jpg";
 import teamPic3 from "@/assets/images/team-4.jpg";
+import { Helmet } from "react-helmet-async";
 
 const About = () => {
     return (
         <section className="pb-10">
-            {/* Hero Banner */}
+            <Helmet>
+                <title>About | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel about page" />
+            </Helmet>
+
             <div className="relative h-[250px] md:h-[400px] flex items-center justify-center bg-center bg-no-repeat mb-16"
                 style={{ backgroundImage: `url("https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1470&q=80")` }}
             >
@@ -21,7 +26,6 @@ const About = () => {
                 </div>
             </div>
 
-            {/* Section: Services */}
             <div className="max-w-7xl mx-auto px-5 mb-16">
                 <SectionHeading title="Our Services" kicker="What We Do" align="center" />
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
@@ -49,7 +53,6 @@ const About = () => {
                 </div>
             </div>
 
-            {/* Section: Mission */}
             <div className="bg-[#f9f9f9] py-16">
                 <div className="max-w-5xl mx-auto px-5 text-center">
                     <div
@@ -72,12 +75,11 @@ const About = () => {
                 </div>
             </div>
 
-            {/* Section: Team */}
             <div className="max-w-7xl mx-auto px-5 mt-16">
                 <SectionHeading title="Meet Our Team" kicker="Who We Are" align="center" />
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-10">
-                    {/* Team Member 1 */}
+
                     <div className="bg-white rounded-2xl overflow-hidden text-center p-6 shadow-2xl border border-primary">
                         <img
                             src={teamPic1}
@@ -88,7 +90,6 @@ const About = () => {
                         <p className="text-muted-foreground">Manager</p>
                     </div>
 
-                    {/* Team Member 2 */}
                     <div className="bg-white rounded-2xl overflow-hidden text-center p-6 shadow-2xl border border-primary">
                         <img
                             src={teamPic2}
@@ -99,7 +100,6 @@ const About = () => {
                         <p className="text-muted-foreground">Supervisor</p>
                     </div>
 
-                    {/* Team Member 3 */}
                     <div className="bg-white rounded-2xl overflow-hidden text-center p-6 shadow-2xl border border-primary">
                         <img
                             src={teamPic3}
@@ -110,7 +110,6 @@ const About = () => {
                         <p className="text-muted-foreground">Sr. Executive</p>
                     </div>
 
-                    {/* Team Member 4 */}
                     <div className="bg-white rounded-2xl overflow-hidden text-center p-6 shadow-2xl border border-primary">
                         <img
                             src={teamPic4}
