@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Search from "@/components/Search";
+import { Helmet } from "react-helmet-async";
 
 const getStatusBadgeClass = (status: ParcelStatus) => {
     switch (status) {
@@ -84,6 +85,11 @@ const ReceiverParcels = () => {
 
     return (
         <div className="container mx-auto p-6 my-16 bg-white dark:bg-neutral-900 rounded-2xl shadow-md">
+            <Helmet>
+                <title>Receiver Parcels | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel receiver parcels page" />
+            </Helmet>
+
             <h2 className="text-2xl font-bold text-red-500 mb-6 text-center">My Parcels</h2>
 
             <div className="mb-6 w-full">

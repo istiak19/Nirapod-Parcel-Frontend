@@ -17,6 +17,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Loading from "@/components/Loading";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const profileSchema = z.object({
     name: z.string().min(2, "Name is required"),
@@ -77,6 +78,11 @@ const UpdateProfile = () => {
 
     return (
         <div className="flex justify-center items-start min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+            <Helmet>
+                <title>Update Profile | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel update profile page" />
+            </Helmet>
+            
             <Card className="w-full max-w-lg shadow-2xl border border-gray-700 rounded-3xl overflow-hidden bg-gray-800 text-white">
                 <CardHeader className="bg-gradient-to-r from-red-400 via-red-300 to-pink-500 dark:from-red-400 dark:via-red-300 dark:to-pink-500 shadow-md">
                     <CardTitle className="text-3xl font-bold text-center py-5 text-white tracking-wide">

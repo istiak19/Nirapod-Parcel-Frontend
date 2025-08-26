@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import Search from "@/components/Search";
+import { Helmet } from "react-helmet-async";
 
 const SenderParcels = () => {
     const [searchParams] = useSearchParams();
@@ -67,6 +68,11 @@ const SenderParcels = () => {
 
     return (
         <div className="container mx-auto p-8 my-16 bg-white dark:bg-neutral-900 rounded-3xl shadow-lg">
+            <Helmet>
+                <title>Sender Parcels | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel sender parcels page" />
+            </Helmet>
+
             <h2 className="text-3xl font-bold text-red-600 mb-8 text-center">My Parcels</h2>
 
             <div className="mb-6 w-full">

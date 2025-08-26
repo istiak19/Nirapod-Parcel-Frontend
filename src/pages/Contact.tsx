@@ -5,6 +5,7 @@ import contactPic from "@/assets/images/contact.jpg";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useCreateContactMutation } from "@/redux/features/contact/contact.api";
+import { Helmet } from "react-helmet-async";
 
 const Contact = () => {
     const [createContact] = useCreateContactMutation();
@@ -35,7 +36,11 @@ const Contact = () => {
 
     return (
         <section className="pb-10">
-            {/* Banner */}
+            <Helmet>
+                <title>Contact | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel contact page" />
+            </Helmet>
+            
             <div
                 className="relative h-[200px] md:h-[300px] flex items-center justify-center bg-center bg-no-repeat mb-10"
                 style={{ backgroundImage: `url(${contactPic})` }}
@@ -58,7 +63,7 @@ const Contact = () => {
             </div>
 
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch px-5">
-                {/* Left Side - Contact Info */}
+
                 <div className="bg-[#0f1c3f] rounded-3xl overflow-hidden flex flex-col">
                     <div className="relative">
                         <img
@@ -104,7 +109,6 @@ const Contact = () => {
                     </div>
                 </div>
 
-                {/* Right Side - Contact Form */}
                 <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
                     <input
                         type="text"
@@ -160,7 +164,6 @@ const Contact = () => {
                 </form>
             </div>
 
-            {/* Google Map */}
             <div className="mt-12 max-w-7xl mx-auto px-5">
                 <iframe
                     title="map"

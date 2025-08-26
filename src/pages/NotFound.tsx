@@ -3,6 +3,7 @@ import { PackageX } from "lucide-react";
 import { Link } from "react-router";
 import { motion } from "framer-motion";
 import notPic from "../assets/images/not.jpg";
+import { Helmet } from "react-helmet-async";
 
 const NotFound = () => {
     return (
@@ -13,24 +14,26 @@ const NotFound = () => {
                 backgroundPosition: "center",
             }}
         >
-            {/* Dark Overlay */}
+            <Helmet>
+                <title>Not Found | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel not found page" />
+            </Helmet>
+
             <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
 
-            {/* Content */}
             <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
                 className="relative max-w-lg w-full text-center space-y-6 bg-background/80 backdrop-blur-lg p-10 rounded-3xl shadow-2xl border border-white/10"
             >
-                {/* Icon */}
+
                 <div className="flex justify-center">
                     <div className="p-5 bg-red-100 dark:bg-red-900/40 rounded-full shadow-md">
                         <PackageX className="w-14 h-14 text-red-500" />
                     </div>
                 </div>
 
-                {/* Title */}
                 <h1 className="text-6xl font-bold text-red-500 drop-shadow-lg">
                     404
                 </h1>
@@ -38,13 +41,11 @@ const NotFound = () => {
                     Page Not Found
                 </h2>
 
-                {/* Subtitle */}
                 <p className="text-muted-foreground leading-relaxed">
                     Sorry, the page you’re looking for doesn’t exist or might have been
                     moved. Let’s get you back on track.
                 </p>
 
-                {/* Actions */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
                     <Button
                         asChild

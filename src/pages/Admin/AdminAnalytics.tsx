@@ -5,6 +5,7 @@ import UserOverview from "@/components/modules/shared/userOverView";
 import { useGetAllParcelQuery } from "@/redux/features/parcel/parcel.api";
 import { useGetAllUserQuery } from "@/redux/features/user/user.api";
 import type { IUser, Parcel } from "@/types";
+import { Helmet } from "react-helmet-async";
 
 const AdminAnalytics = () => {
     const { data, isLoading } = useGetAllParcelQuery(undefined);
@@ -20,7 +21,6 @@ const AdminAnalytics = () => {
     const inTransit = parcels.filter((p) => p.currentStatus === "In Transit").length;
     const cancelled = parcels.filter((p) => p.currentStatus === "Cancelled").length;
 
-    // Users stats
     const totalUsers = usersData?.meta?.total || 0;
     const activeUsers = usersData?.data?.filter((u: IUser) => u.isBlocked === "Active").length || 0;
     const blockedUsers = usersData?.data?.filter((u: IUser) => u.isBlocked === "Blocked").length || 0;
@@ -30,6 +30,11 @@ const AdminAnalytics = () => {
 
     return (
         <div className="space-y-8 py-10">
+            <Helmet>
+                <title>Admin Dashboard | Nirapod Parcel</title>
+                <meta name="description" content="Welcome to Nirapod Parcel admin dashboard page" />
+            </Helmet>
+
             <section>
                 <h2 className="text-2xl font-bold mb-4">User Overview</h2>
                 <UserOverview
