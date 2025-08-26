@@ -1,6 +1,10 @@
 # 📦 Nirapod Parcel
 
-Nirapod Parcel is a robust, role-based React application built with TypeScript, Redux Toolkit, and RTK Query, designed to provide a seamless and secure parcel management experience. It features dynamic dashboards, visual analytics, and responsive UI tailored for **Senders, Receivers, and Admins**. Users can track parcels, manage deliveries, update statuses, and view detailed logs in real time. With role-specific navigation, API integration, and accessibility-focused design, Nirapod delivers a professional, user-friendly, and performant solution for modern parcel delivery operations.
+**Nirapod Parcel** is a robust, role-based React application built with TypeScript, Redux Toolkit, and RTK Query, designed to provide a seamless and secure parcel management experience.
+
+It features **dynamic dashboards, visual analytics, and responsive UI** tailored for **Senders, Receivers, and Admins**. Users can track parcels, manage deliveries, update statuses, and view detailed logs in real time.
+
+With **role-specific navigation, API integration, and accessibility-focused design**, Nirapod delivers a professional, user-friendly, and performant solution for modern parcel delivery operations.
 
 🔗 **Live Demo**: [nirapod-parcel.netlify.app](https://nirapod-parcel.netlify.app/)
 🔗 **Backend API**: [nirapod-parcel-backend.vercel.app](https://nirapod-parcel-backend.vercel.app/)
@@ -27,26 +31,26 @@ Nirapod Parcel is a robust, role-based React application built with TypeScript, 
 
 ## 🚀 Introduction
 
-**Nirapod Parcel** is a modern parcel delivery management system with:
+**Nirapod Parcel** provides:
 
-* Role-based dashboards (Sender, Receiver, Admin)
+* Role-based dashboards (**Sender, Receiver, Admin**)
 * Real-time parcel tracking
-* Status updates & delivery logs
-* Secure authentication & team switching
-* Analytics & reporting with visual charts
+* Delivery status updates & logs
+* Secure authentication & role switching
+* Analytics & reporting with charts
 * Accessibility-focused, mobile-friendly UI
 
 ---
 
 ## ✨ Features
 
-* 🔐 **Role-based access**: Separate features for users and admins
-* 📊 **Dynamic dashboards**: Analytics and parcel history visualization with **Recharts**
+* 🔐 **Role-based access**: Different experiences for receiver & admins
+* 📊 **Dynamic dashboards** with **Recharts** analytics
 * 🌓 **Dark/Light mode toggle** for accessibility
-* 🔄 **Real-time updates** using RTK Query
+* 🔄 **Real-time data fetching** via RTK Query
 * 📂 **File & image upload support**
-* 🧩 **Reusable UI components** powered by Radix UI + TailwindCSS
-* ⚡ **Optimized performance** with React 19 and Vite
+* 🧩 **Reusable UI components** (Radix UI + TailwindCSS)
+* ⚡ **Optimized performance** with React 19 + Vite
 
 ---
 
@@ -80,7 +84,7 @@ src/
 ├── types/          # TypeScript types/interfaces
 ├── utils/          # Helper functions
 ├── App.tsx         # Root component
-├── main.tsx        # App entry (Vite)
+├── main.tsx        # Entry point (Vite)
 └── index.css       # Global styles
 ```
 
@@ -92,10 +96,10 @@ src/
 * **Language:** [TypeScript](https://www.typescriptlang.org/)
 * **State Management:** [Redux Toolkit](https://redux-toolkit.js.org/) + [RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
 * **UI & Styling:** [TailwindCSS](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), [Framer Motion](https://www.framer.com/motion/)
-* **Forms & Validation:** [React Hook Form](https://react-hook-form.com/), [Zod](https://zod.dev/), [@hookform/resolvers](https://github.com/react-hook-form/resolvers)
-* **Charts & Analytics:** [Recharts](https://recharts.org/)
+* **Forms & Validation:** [React Hook Form](https://react-hook-form.com/), [Zod](https://zod.dev/)
+* **Charts:** [Recharts](https://recharts.org/)
 * **API Requests:** [Axios](https://axios-http.com/)
-* **Notifications & Alerts:** [React Toastify](https://fkhadra.github.io/react-toastify/), [SweetAlert2](https://sweetalert2.github.io/)
+* **Notifications:** [React Toastify](https://fkhadra.github.io/react-toastify/), [SweetAlert2](https://sweetalert2.github.io/)
 
 ---
 
@@ -119,41 +123,57 @@ npm run dev
 
 ## ▶️ Usage
 
-* Visit `http://localhost:5173` after running `npm run dev`.
-* Login as a **Sender, Receiver, or Admin** (credentials configured in backend).
-* Access role-based features like:
+1. Run the dev server and visit:
+   `http://localhost:5173`
 
-  * Parcel creation & tracking
-  * Delivery management & updates
-  * Analytics dashboard
+2. Login as a **Sender, Receiver, or Admin** using test credentials.
+
+   **Test Accounts (Demo only):**
+
+   * **Admin**
+     Email: `istiak19@gmail.com`
+     Password: `Abcd@123`
+
+   * **Sender**
+     Email: `istiak15-14128@diu.edu.bd`
+     Password: `Abcd@123`
+
+   * **Receiver**
+     Email: `ahamed19@gmail.com`
+     Password: `Abcd@123`
 
 ---
 
 ## 🔧 Configuration
 
-Create a `.env` file at the project root with:
+Create a `.env` file in the project root:
 
 ```env
 VITE_API_BASE_URL=https://nirapod-parcel-backend.vercel.app/api
 ```
 
-Adjust the URL based on your backend environment (local / staging / production).
+Adjust the API URL for **local / staging / production** environments.
 
 ---
 
 ## 💡 Examples
 
-* **Sender**: Create and track parcels in real-time.
-* **Receiver**: Get notified when parcels are in transit or delivered.
-* **Admin**: Manage all parcels, update statuses, and view analytics.
+* **Sender**: Create a parcel.
+* **Receiver**: Get notified when a parcel is in transit or delivered.
+* **Admin**: Manage all parcels, update statuses, and view reports.
 
 ---
 
 ## 🛠 Troubleshooting
 
-* If Tailwind styles don’t apply, ensure `tailwind.config.js` is properly set up.
-* Check API connectivity by verifying the `VITE_API_BASE_URL`.
-* For type issues, run:
+* **Tailwind styles not loading?**
+  Check `tailwind.config.js` setup.
+
+* **API not working?**
+  Verify `VITE_API_BASE_URL` in `.env`.
+
+* **TypeScript errors?**
+  Run:
 
   ```bash
   npm run lint
