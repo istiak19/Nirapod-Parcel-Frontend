@@ -25,8 +25,8 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useCreateParcelMutation } from "@/redux/features/parcel/sender.api";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router";
 
-// ✅ Zod Schema (use Date instead of string)
 const parcelSchema = z.object({
     type: z.string().min(1, "Parcel type is required"),
     weight: z.number().positive("Weight must be positive"),
@@ -41,6 +41,7 @@ const parcelSchema = z.object({
 type ParcelFormValues = z.infer<typeof parcelSchema>;
 
 const CreateParcel = () => {
+    const navigate = useNavigate();
     const form = useForm<ParcelFormValues>({
         resolver: zodResolver(parcelSchema),
         defaultValues: {
@@ -75,12 +76,14 @@ const CreateParcel = () => {
                 }
             ],
         }
-        console.log(parcelData);
 
         try {
-            await create(parcelData).unwrap();
-            toast.success("Parcel created successfully!");
-            form.reset();
+            const res = await create(parcelData).unwrap();
+            if (res.success) {
+                toast.success("Parcel created successfully!");
+                form.reset();
+                navigate("/sender/parcels");
+            }
         } catch (err: any) {
             toast.error(err?.data?.message || "Failed to create parcel");
         }

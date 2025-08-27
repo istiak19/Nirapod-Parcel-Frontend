@@ -29,8 +29,9 @@ const Contact = () => {
                 toast.success("Message sent successfully!");
                 setFormData({ name: "", phone: "", email: "", subject: "", message: "" });
             };
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     };
 
@@ -40,7 +41,7 @@ const Contact = () => {
                 <title>Contact | Nirapod Parcel</title>
                 <meta name="description" content="Welcome to Nirapod Parcel contact page" />
             </Helmet>
-            
+
             <div
                 className="relative h-[200px] md:h-[300px] flex items-center justify-center bg-center bg-no-repeat mb-10"
                 style={{ backgroundImage: `url(${contactPic})` }}
