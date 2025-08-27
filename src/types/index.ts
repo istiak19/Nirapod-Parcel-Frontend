@@ -62,6 +62,7 @@ export interface IStatusLog {
 export interface IParcel {
     _id: string;
     type: string;
+    trackingId: string;
     weight: number;
     fee: number;
     pickupAddress: string;

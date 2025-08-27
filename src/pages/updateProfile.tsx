@@ -1,4 +1,4 @@
-import { useGetSingleUserQuery, useUpdateUserMutation } from "@/redux/features/user/user.api";
+import { useGetSingleUserQuery } from "@/redux/features/user/user.api";
 import { useParams, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +18,7 @@ import Loading from "@/components/Loading";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
+import { useUpdatedUserMutation } from "@/redux/features/auth/auth.api";
 
 const profileSchema = z.object({
     name: z.string().min(2, "Name is required"),
@@ -32,7 +33,7 @@ const UpdateProfile = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { data, isFetching } = useGetSingleUserQuery(id as string);
-    const [updateUser] = useUpdateUserMutation();
+    const [updateUser] = useUpdatedUserMutation();
     const user = data?.data;
 
     const form = useForm<ProfileFormValues>({
@@ -57,6 +58,7 @@ const UpdateProfile = () => {
     }, [user, form]);
 
     const onSubmit = async (values: ProfileFormValues) => {
+
         try {
             const res = await updateUser({ id, userInfo: values }).unwrap();
             if (res?.success) {

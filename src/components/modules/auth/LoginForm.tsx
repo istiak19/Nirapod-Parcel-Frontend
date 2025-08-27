@@ -45,7 +45,6 @@ const LoginForm = ({
         const userInfo = { email, password };
         try {
             const result = await login(userInfo).unwrap();
-            console.log(result);
             if (result.success) {
                 toast.success("Logged in successfully!")
                 navigate("/")

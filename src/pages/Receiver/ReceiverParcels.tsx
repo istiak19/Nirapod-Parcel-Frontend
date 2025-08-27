@@ -259,6 +259,13 @@ const ReceiverParcels = () => {
                                             </span>
                                         </div>
 
+                                        <div className="mb-4">
+                                            <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Tracking ID:</span>
+                                            <span className="ml-2 px-3 py-1 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-red-500 dark:text-red-400 font-mono text-sm">
+                                                {parcel.trackingId}
+                                            </span>
+                                        </div>
+
                                         <div className="space-y-3">
                                             {parcel.statusLogs
                                                 .slice()
@@ -269,7 +276,7 @@ const ReceiverParcels = () => {
                                                 )
                                                 .map((log, idx) => (
                                                     <div key={idx} className="flex items-start gap-3">
-                                                        <div className="flex-shrink-0 w-3 h-3 mt-1.5 rounded-full bg-blue-500"></div>
+                                                        <div className="flex-shrink-0 w-3 h-3 mt-1.5 rounded-full bg-red-500"></div>
                                                         <div>
                                                             <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                                                                 {log.status}

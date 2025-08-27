@@ -29,7 +29,7 @@ const ManageUsers = () => {
             await userStatus({ id, isBlocked: newStatus }).unwrap();
             toast.success(`User ${newStatus} successfully!`);
         } catch (err: any) {
-            console.log(err)
+            // console.log(err)
             toast.error(err?.data?.message || `Failed to ${newStatus.toLowerCase()} user.`);
         }
     };
@@ -102,6 +102,7 @@ const ManageUsers = () => {
                                             <Button
                                                 variant={isBlocked ? "outline" : "destructive"}
                                                 size="sm"
+                                                className="cursor-pointer"
                                                 onClick={() => handleToggleStatus(user._id as string, isBlocked)}
                                             >
                                                 {isBlocked ? "Unblock" : "Block"}
