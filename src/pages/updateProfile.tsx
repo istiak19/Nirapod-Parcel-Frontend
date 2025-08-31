@@ -15,10 +15,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Loading from "@/components/Loading";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import { useUpdatedUserMutation } from "@/redux/features/auth/auth.api";
+import SingleImageUpload from "@/components/singleImageUpload";
 
 const profileSchema = z.object({
     name: z.string().min(2, "Name is required"),
@@ -32,6 +33,7 @@ type ProfileFormValues = z.infer<typeof profileSchema>;
 const UpdateProfile = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const [image, setImage] = useState<File | null>(null);
     const { data, isFetching } = useGetSingleUserQuery(id as string);
     const [updateUser] = useUpdatedUserMutation();
     const user = data?.data;
@@ -58,9 +60,12 @@ const UpdateProfile = () => {
     }, [user, form]);
 
     const onSubmit = async (values: ProfileFormValues) => {
+        const formData = new FormData();
+        formData.append("data", JSON.stringify(values))
+        formData.append("file", image as File);
 
         try {
-            const res = await updateUser({ id, userInfo: values }).unwrap();
+            const res = await updateUser({ id, userInfo: formData }).unwrap();
             if (res?.success) {
                 toast.success("Your profile has been updated successfully")
                 if (user?.role === "Admin") {
@@ -84,7 +89,7 @@ const UpdateProfile = () => {
                 <title>Update Profile | Nirapod Parcel</title>
                 <meta name="description" content="Welcome to Nirapod Parcel update profile page" />
             </Helmet>
-            
+
             <Card className="w-full max-w-lg shadow-2xl border border-gray-700 rounded-3xl overflow-hidden bg-gray-800 text-white">
                 <CardHeader className="bg-gradient-to-r from-red-400 via-red-300 to-pink-500 dark:from-red-400 dark:via-red-300 dark:to-pink-500 shadow-md">
                     <CardTitle className="text-3xl font-bold text-center py-5 text-white tracking-wide">
@@ -168,6 +173,7 @@ const UpdateProfile = () => {
                                 )}
                             />
                         </form>
+                        <SingleImageUpload onChange={setImage} />
                     </Form>
                     <div className="flex justify-end gap-4 mt-8">
                         <Button
