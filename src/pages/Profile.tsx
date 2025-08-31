@@ -30,7 +30,7 @@ const Profile = () => {
                 <title>Profile | Nirapod Parcel</title>
                 <meta name="description" content="Welcome to Nirapod Parcel profile page" />
             </Helmet>
-            
+
             <Card className="w-full max-w-lg rounded-xl shadow-lg border border-border bg-card transition-transform relative">
                 <div className="relative h-32 bg-gradient-to-r from-pink-500 to-red-400 rounded-t-xl">
                     <div className="absolute top-3 right-3">
@@ -46,14 +46,23 @@ const Profile = () => {
                     </div>
 
                     <div className="absolute -bottom-14 left-1/2 -translate-x-1/2">
-                        <Avatar className="w-28 h-28 border-4 border-background shadow-lg">
-                            <AvatarImage
-                                src={`https://ui-avatars.com/api/?name=${user?.name}&background=random`}
-                                alt={user?.name}
-                            />
-                            <AvatarFallback className="text-2xl font-bold">
-                                {user?.name.charAt(0)}
-                            </AvatarFallback>
+                        <Avatar className="w-28 h-28 border-2 border-background shadow-lg">
+                            {user?.picture ? (
+                                <AvatarImage
+                                    src={user.picture}
+                                    alt={user.name}
+                                />
+                            ) : (
+                                <>
+                                    <AvatarImage
+                                        src={`https://ui-avatars.com/api/?name=${user.name}&background=random`}
+                                        alt={user.name}
+                                    />
+                                    <AvatarFallback className="text-2xl font-bold">
+                                        {user.name.charAt(0)}
+                                    </AvatarFallback>
+                                </>
+                            )}
                         </Avatar>
                     </div>
                 </div>

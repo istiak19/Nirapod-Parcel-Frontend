@@ -8,8 +8,8 @@ import { authApi, useLogoutMutation } from "@/redux/features/auth/auth.api"
 import { useGetMeUserQuery } from "@/redux/features/user/user.api"
 import { useAppDispatch } from "@/redux/hooks"
 import { Link } from "react-router"
+import userPic from "@/assets/images/user.png";
 
-// Navigation links
 const navigationLinks = [
   { href: "/", label: "Home", role: "PUBLIC" },
   { href: "/about", label: "About", role: "PUBLIC" },
@@ -72,13 +72,26 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <ModeToggle />
           {data?.data?.email ? (
-            <Button
-              onClick={handleLogout}
-              variant="outline"
-              className="text-sm cursor-pointer"
-            >
-              Logout
-            </Button>
+            <>
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar p-0">
+                <div className="w-10 h-10 rounded-full border-2 border-red-500 shadow-2xl overflow-hidden">
+                  <img title={data?.data?.name}
+                    src={data?.data?.picture || userPic}
+                    alt="User Avatar"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </label>
+
+              <Button
+                onClick={handleLogout}
+                variant="outline"
+                className="text-sm cursor-pointer"
+              >
+                Logout
+              </Button>
+            </>
           ) : (
             <Button asChild className="text-sm hidden md:inline-flex bg-red-500 hover:bg-red-600 text-white">
               <Link to="/login">Login</Link>
