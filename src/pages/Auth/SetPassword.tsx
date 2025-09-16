@@ -30,7 +30,6 @@ const SetPassword = () => {
     const navigate = useNavigate();
     const { data } = useGetMeUserQuery(undefined);
     const user = data?.data;
-
     const [setPassword, { isLoading }] = useSetPasswordMutation();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
