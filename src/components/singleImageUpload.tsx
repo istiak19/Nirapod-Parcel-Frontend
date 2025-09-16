@@ -35,7 +35,7 @@ export default function SingleImageUpload({ onChange }: any) {
     }, [files, onChange])
 
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 w-full">
             <div className="relative">
                 {/* Drop area */}
                 <div
