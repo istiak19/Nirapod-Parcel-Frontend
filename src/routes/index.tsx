@@ -20,6 +20,7 @@ const Unauthorized = lazy(() => import("@/pages/Unauthorized"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const TrackingPage = lazy(() => import("@/pages/TrackingPage"));
 const UpdateProfile = lazy(() => import("@/pages/updateProfile"));
+const SetPassword = lazy(() => import("@/pages/SetPassword"));
 
 const router = createBrowserRouter([
     {
@@ -84,11 +85,15 @@ const router = createBrowserRouter([
     },
     {
         path: "/verify",
-        Component: Verify
+        Component: withAuth(Verify)
     },
     {
         path: "/profile/:id",
-        Component: UpdateProfile
+        Component: withAuth(UpdateProfile)
+    },
+    {
+        path: "/set-password",
+        Component: withAuth(SetPassword)
     },
     {
         path: "/unauthorized",
