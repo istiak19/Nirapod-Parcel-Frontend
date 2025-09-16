@@ -2,7 +2,7 @@
 import { useGetMeUserQuery } from "@/redux/features/user/user.api";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Mail, Phone, MapPin, XCircle, Pencil, BadgeCheck } from "lucide-react";
+import { Mail, Phone, MapPin, XCircle, Pencil, BadgeCheck, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/Loading";
 import { Link } from "react-router";
@@ -49,6 +49,16 @@ const Profile = () => {
                                 </span>
                             </Link>
                         </Button>
+                        {hasCredentials && (
+                            <Button asChild variant="secondary" size="sm" className="shadow-md ml-2">
+                                <Link to="/change-password">
+                                    <span className="flex items-center gap-1">
+                                        <Lock className="w-4 h-4" />
+                                        Change Password
+                                    </span>
+                                </Link>
+                            </Button>
+                        )}
                     </div>
 
                     {/* Avatar */}
