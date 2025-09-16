@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetMeUserQuery } from "@/redux/features/user/user.api";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -22,9 +23,11 @@ const Profile = () => {
         Receiver: "from-green-500 to-green-600 text-white",
     };
 
-    const roleClass =
-        roleColors[user.role as keyof typeof roleColors] ||
-        "from-gray-400 to-gray-500 text-white";
+    const roleClass = roleColors[user.role as keyof typeof roleColors] || "from-gray-400 to-gray-500 text-white";
+
+    // Google login check
+    const isGoogleLogin = user.auths?.some((auth: any) => auth.provider === "google");
+    const hasCredentials = user.auths?.some((auth: any) => auth.provider === "credentials");
 
     return (
         <div className="flex justify-center px-4 py-16">
@@ -36,16 +39,14 @@ const Profile = () => {
             <Card className="w-full max-w-3xl rounded-2xl shadow-xl border border-border bg-card relative overflow-hidden">
                 {/* Top gradient cover */}
                 <div className="relative h-36 bg-gradient-to-r from-pink-500 via-red-500 to-red-400 rounded-t-2xl">
+                    {/* Edit button */}
                     <div className="absolute top-3 right-3">
-                        <Button
-                            asChild
-                            variant="secondary"
-                            size="sm"
-                            className="flex items-center gap-1 shadow-md"
-                        >
+                        <Button asChild variant="secondary" size="sm" className="shadow-md">
                             <Link to={`/profile/${user?._id}`}>
-                                <Pencil className="w-4 h-4" />
-                                Edit
+                                <span className="flex items-center gap-1">
+                                    <Pencil className="w-4 h-4" />
+                                    Edit
+                                </span>
                             </Link>
                         </Button>
                     </div>
@@ -56,15 +57,7 @@ const Profile = () => {
                             {user?.picture ? (
                                 <AvatarImage src={user.picture} alt={user.name} />
                             ) : (
-                                <>
-                                    <AvatarImage
-                                        src={`https://ui-avatars.com/api/?name=${user.name}&background=random`}
-                                        alt={user.name}
-                                    />
-                                    <AvatarFallback className="text-3xl font-bold">
-                                        {user.name.charAt(0)}
-                                    </AvatarFallback>
-                                </>
+                                <AvatarFallback className="text-3xl font-bold">{user.name.charAt(0)}</AvatarFallback>
                             )}
                         </Avatar>
                     </div>
@@ -72,14 +65,29 @@ const Profile = () => {
 
                 <CardHeader className="mt-20 flex flex-col items-center text-center">
                     <h2 className="text-3xl font-extrabold text-foreground">{user?.name}</h2>
-                    <p
-                        className={`mt-3 text-sm px-5 py-1.5 rounded-full font-medium shadow-sm bg-gradient-to-r ${roleClass}`}
-                    >
+                    <p className={`mt-3 text-sm px-5 py-1.5 rounded-full font-medium shadow-sm bg-gradient-to-r ${roleClass}`}>
                         {user?.role}
                     </p>
                 </CardHeader>
 
                 <CardContent className="space-y-6 px-8 pb-10">
+                    {/* Google login notice */}
+                    {isGoogleLogin && !user?.password && !hasCredentials && (
+                        <div className="mt-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-sm font-medium text-yellow-800 dark:border-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-200 shadow-sm">
+                            <p className="text-center">
+                                You logged in via <span className="font-semibold">Google</span>.{" "}
+                                Please{" "}
+                                <Link
+                                    to="/set-password"
+                                    className="underline font-semibold text-yellow-900 dark:text-yellow-100 hover:text-yellow-700 dark:hover:text-yellow-50 transition"
+                                >
+                                    set your password
+                                </Link>{" "}
+                                to secure your account.
+                            </p>
+                        </div>
+                    )}
+
                     {/* Info rows */}
                     <div className="grid gap-4">
                         <InfoRow icon={<Mail className="h-5 w-5 text-indigo-500" />} label="Email" value={user?.email} />
@@ -121,12 +129,7 @@ const Profile = () => {
                         )}
                         <div>
                             <p className="text-xs text-muted-foreground">Verification</p>
-                            <p
-                                className={`font-medium ${user?.isVerified
-                                    ? "text-green-600 dark:text-green-400"
-                                    : "text-red-600 dark:text-red-400"
-                                    }`}
-                            >
+                            <p className={`font-medium ${user?.isVerified ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
                                 {user?.isVerified ? "Verified Account" : "Not Verified"}
                             </p>
                         </div>
