@@ -7,7 +7,7 @@ It features **dynamic dashboards, visual analytics, and responsive UI** tailored
 With **role-specific navigation, API integration, and accessibility-focused design**, Nirapod delivers a professional, user-friendly, and performant solution for modern parcel delivery operations.
 
 🔗 **Live Demo**: [nirapod-parcel.netlify.app](https://nirapod-parcel.netlify.app/)
-🔗 **Backend API**: [nirapod-parcel-backend.vercel.app](https://nirapod-parcel-backend.vercel.app/)
+🔗 **Backend API**: [nirapod-parcel-backend.vercel.app](https://nirapod-parcel.vercel.app/)
 🔗 **Frontend Repo**: [Nirapod-Parcel-Frontend](https://github.com/istiak19/Nirapod-Parcel-Frontend)
 🔗 **Backend Repo**: [Nirapod-Parcel-Backend](https://github.com/istiak19/Nirapod-Parcel-Backend)
 
