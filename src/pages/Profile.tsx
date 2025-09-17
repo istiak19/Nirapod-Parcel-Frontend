@@ -39,23 +39,32 @@ const Profile = () => {
             <Card className="w-full max-w-3xl rounded-2xl shadow-xl border border-border bg-card relative overflow-hidden">
                 {/* Top gradient cover */}
                 <div className="relative h-36 bg-gradient-to-r from-pink-500 via-red-500 to-red-400 rounded-t-2xl">
-                    {/* Edit button */}
-                    <div className="absolute top-3 right-3">
-                        <Button asChild variant="secondary" size="sm" className="shadow-md">
+                    {/* Action Buttons */}
+                    <div className="absolute top-3 right-3 flex gap-3">
+                        {/* Edit Profile */}
+                        <Button
+                            asChild
+                            variant="secondary"
+                            size="sm"
+                            className="flex items-center gap-2 rounded-full shadow-sm border bg-amber-600 border-white hover:bg-pink-500 hover:text-white transition-colors"
+                        >
                             <Link to={`/profile/${user?._id}`}>
-                                <span className="flex items-center gap-1">
-                                    <Pencil className="w-4 h-4" />
-                                    Edit
-                                </span>
+                                <Pencil className="w-4 h-4" />
+                                <span>Edit Profile</span>
                             </Link>
                         </Button>
+
+                        {/* Change Password */}
                         {hasCredentials && (
-                            <Button asChild variant="secondary" size="sm" className="shadow-md ml-2">
+                            <Button
+                                asChild
+                                variant="secondary"
+                                size="sm"
+                                className="flex items-center gap-2 rounded-full shadow-sm border bg-amber-600 border-white hover:bg-red-600 hover:text-white transition-colors"
+                            >
                                 <Link to="/change-password">
-                                    <span className="flex items-center gap-1">
-                                        <Lock className="w-4 h-4" />
-                                        Change Password
-                                    </span>
+                                    <Lock className="w-4 h-4" />
+                                    <span>Change Password</span>
                                 </Link>
                             </Button>
                         )}
