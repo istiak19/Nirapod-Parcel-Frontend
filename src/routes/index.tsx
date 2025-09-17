@@ -22,6 +22,7 @@ const TrackingPage = lazy(() => import("@/pages/TrackingPage"));
 const UpdateProfile = lazy(() => import("@/pages/updateProfile"));
 const SetPassword = lazy(() => import("@/pages/Auth/SetPassword"));
 const ChangePassword = lazy(() => import("@/pages/Auth/ChangePassword"));
+const ResetPassword = lazy(() => import("@/pages/Auth/ResetPassword"));
 
 const router = createBrowserRouter([
     {
@@ -99,6 +100,10 @@ const router = createBrowserRouter([
     {
         path: "/change-password",
         Component: withAuth(ChangePassword)
+    },
+    {
+        path: "/reset-password/:id",
+        Component: withAuth(ResetPassword)
     },
     {
         path: "/unauthorized",

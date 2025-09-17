@@ -1,10 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion } from "framer-motion";
-import { Package, MapPin, User, Calendar, BadgeCheck, Phone, Mail } from "lucide-react";
+import { Package, MapPin, User, CalendarIcon, BadgeCheck, Phone, Mail } from "lucide-react";
 import Loading from "@/components/Loading";
-import { useIncomingParcelQuery } from "@/redux/features/parcel/receiver.api";
+import { useIncomingParcelQuery, useRescheduleParcelMutation } from "@/redux/features/parcel/receiver.api";
 import clsx from "clsx";
 import { Helmet } from "react-helmet-async";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
 
 const statusColor = (status: string) => {
     switch (status) {
@@ -23,12 +30,38 @@ const statusColor = (status: string) => {
 
 const IncomingParcels = () => {
     const { data, isFetching } = useIncomingParcelQuery(undefined);
+    const [rescheduleParcel] = useRescheduleParcelMutation();
+    const [open, setOpen] = useState(false);
+    const [selectedParcel, setSelectedParcel] = useState<any>(null);
+    const [newDate, setNewDate] = useState<Date | undefined>(undefined);
 
     if (isFetching) return <Loading />;
-    // if (isError)
-    //     return <p className="text-red-500 text-center">Failed to load parcels.</p>;
+
+    const handleReschedule = async () => {
+        try {
+            if (!selectedParcel || !newDate) return;
+
+            const parcelInfo = {
+                newDate: newDate.toISOString(),
+                statusLogs: [{ status: "Rescheduled" }]
+            };
+
+            await rescheduleParcel({
+                id: selectedParcel._id,
+                parcelInfo
+            }).unwrap();
+
+            toast.success("Parcel rescheduled successfully!");
+            setOpen(false);
+            setNewDate(undefined);
+        } catch (err: any) {
+            console.log(err);
+            toast.error(err?.data?.message || "Failed to reschedule parcel");
+        }
+    };
 
     const parcels = data?.data || [];
+
     return (
         <div className="p-4 container mx-auto">
             <Helmet>
@@ -58,29 +91,25 @@ const IncomingParcels = () => {
                             transition={{ delay: index * 0.05 }}
                             className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-2xl flex flex-col p-4"
                         >
+                            {/* Parcel Header */}
                             <div className="px-5 py-3 flex items-center justify-between border-b gap-5 border-gray-100 dark:border-neutral-800">
-                                <p className="font-semibold text-gray-800 dark:text-gray-200">
-                                    {parcel.trackingId}
-                                </p>
-                                <span
-                                    className={clsx(
-                                        "px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1",
-                                        statusColor(parcel.currentStatus)
-                                    )}
-                                >
+                                <p className="font-semibold text-gray-800 dark:text-gray-200">{parcel.trackingId}</p>
+                                <span className={clsx(
+                                    "px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1",
+                                    statusColor(parcel.currentStatus)
+                                )}>
                                     <BadgeCheck className="h-4 w-4" />
                                     {parcel.currentStatus}
                                 </span>
                             </div>
 
+                            {/* Parcel Details */}
                             <div className="p-5 flex-1 space-y-3">
                                 {/* Sender Info */}
                                 <div className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
                                     <div className="flex items-center gap-2">
                                         <User className="h-4 w-4 text-red-500" />
-                                        <span className="font-medium">
-                                            Sender: {parcel.sender?.name}
-                                        </span>
+                                        <span className="font-medium">Sender: {parcel.sender?.name}</span>
                                     </div>
                                     {parcel.sender?.email && (
                                         <div className="flex items-center gap-2 pl-6">
@@ -100,9 +129,7 @@ const IncomingParcels = () => {
                                 <div className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
                                     <div className="flex items-center gap-2">
                                         <User className="h-4 w-4 text-blue-500" />
-                                        <span className="font-medium">
-                                            Receiver: {parcel.receiver?.name}
-                                        </span>
+                                        <span className="font-medium">Receiver: {parcel.receiver?.name}</span>
                                     </div>
                                     {parcel.receiver?.email && (
                                         <div className="flex items-center gap-2 pl-6">
@@ -115,70 +142,97 @@ const IncomingParcels = () => {
                                 {/* Parcel Info */}
                                 <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                                     <Package className="h-4 w-4 text-yellow-500" />
-                                    <span>
-                                        {parcel.type} • {parcel.weight}kg
-                                    </span>
+                                    <span>{parcel.type} • {parcel.weight}kg</span>
                                 </div>
 
                                 {/* Full Address */}
                                 <div className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
                                     <MapPin className="h-4 w-4 text-purple-500 mt-1" />
                                     <div className="space-y-1">
-                                        <p>
-                                            <strong>Pickup:</strong>{" "}
-                                            {parcel.pickupAddress}
-                                        </p>
-                                        <p>
-                                            <strong>Delivery:</strong>{" "}
-                                            {parcel.deliveryAddress}
-                                        </p>
+                                        <p><strong>Pickup:</strong> {parcel.pickupAddress}</p>
+                                        <p><strong>Delivery:</strong> {parcel.deliveryAddress}</p>
                                     </div>
                                 </div>
 
                                 {/* Delivery Date */}
                                 <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                                    <Calendar className="h-4 w-4 text-orange-500" />
-                                    <span>
-                                        Delivery:{" "}
-                                        {new Date(parcel.deliveryDate).toLocaleDateString()}
-                                    </span>
+                                    <CalendarIcon className="h-4 w-4 text-orange-500" />
+                                    <span>Delivery: {new Date(parcel.deliveryDate).toLocaleDateString()}</span>
                                 </div>
+
+                                {/* Reschedule Button */}
+                                {parcel.currentStatus === "In Transit" && (
+                                    <Button
+                                        size="sm"
+                                        className="bg-red-500 hover:bg-red-600 text-white w-full mt-3"
+                                        onClick={() => {
+                                            setSelectedParcel(parcel);
+                                            setOpen(true);
+                                        }}
+                                    >
+                                        Reschedule
+                                    </Button>
+                                )}
                             </div>
 
                             {/* Status Logs */}
                             <div className="px-5 pb-5 border-t border-gray-100 dark:border-neutral-800">
-                                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">
-                                    Status Logs
-                                </h4>
+                                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Status Logs</h4>
                                 <ul className="space-y-3 text-xs">
-                                    {[...parcel.statusLogs].reverse().map(
-                                        (log: any, idx: number) => (
-                                            <li
-                                                key={idx}
-                                                className="relative border-l-2 border-red-500 pl-3"
-                                            >
-                                                <div className="absolute -left-[6px] top-1 w-3 h-3 rounded-full bg-red-500"></div>
-                                                <p className="font-medium text-gray-800 dark:text-gray-100">
-                                                    {log.status} •{" "}
-                                                    {new Date(log.updateAt).toLocaleString()}
-                                                </p>
-                                                <p className="text-gray-600 dark:text-gray-400">
-                                                    {log.location}
-                                                </p>
-                                                {log.note && (
-                                                    <p className="italic text-gray-500 dark:text-gray-400">
-                                                        {log.note}
-                                                    </p>
-                                                )}
-                                            </li>
-                                        )
-                                    )}
+                                    {[...parcel.statusLogs].reverse().map((log: any, idx: number) => (
+                                        <li key={idx} className="relative border-l-2 border-red-500 pl-3">
+                                            <div className="absolute -left-[6px] top-1 w-3 h-3 rounded-full bg-red-500"></div>
+                                            <p className="font-medium text-gray-800 dark:text-gray-100">{log.status} • {new Date(log.updateAt).toLocaleString()}</p>
+                                            <p className="text-gray-600 dark:text-gray-400">{log.location}</p>
+                                            {log.note && <p className="italic text-gray-500 dark:text-gray-400">{log.note}</p>}
+                                        </li>
+                                    ))}
                                 </ul>
                             </div>
                         </motion.div>
                     ))}
                 </div>
             )}
+
+            {/* Reschedule Modal */}
+            <Dialog open={open} onOpenChange={setOpen}>
+                <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>Reschedule Parcel</DialogTitle>
+                        <DialogDescription>Select a new delivery date for the parcel.</DialogDescription>
+                    </DialogHeader>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">New Delivery Date</label>
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button variant="outline" className="w-full justify-start text-left">
+                                    {newDate ? format(newDate, "PPP") : "Select date"}
+                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0">
+                                <Calendar
+                                    mode="single"
+                                    selected={newDate}
+                                    onSelect={setNewDate} // Correctly typed as Date | undefined
+                                />
+                            </PopoverContent>
+                        </Popover>
+                    </div>
+
+                    <DialogFooter className="mt-4 flex justify-end gap-2">
+                        <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+                        <Button
+                            className="bg-indigo-500 hover:bg-indigo-600 text-white"
+                            disabled={!newDate}
+                            onClick={handleReschedule}
+                        >
+                            Confirm
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 };
