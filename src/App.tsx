@@ -1,5 +1,5 @@
-import { Outlet } from "react-router"
-import CommonLayout from "./components/layout/CommonLayout"
+import { Outlet } from "react-router";
+import CommonLayout from "./components/layout/CommonLayout";
 
 function App() {
 
@@ -12,4 +12,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
