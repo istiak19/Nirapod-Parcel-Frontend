@@ -44,13 +44,12 @@ With **role-specific navigation, API integration, and accessibility-focused desi
 
 ## ✨ Features
 
-* 🔐 **Role-based access**: Different experiences for receiver & admins
-* 📊 **Dynamic dashboards** with **Recharts** analytics
-* 🌓 **Dark/Light mode toggle** for accessibility
-* 🔄 **Real-time data fetching** via RTK Query
-* 📂 **File & image upload support**
-* 🧩 **Reusable UI components** (Radix UI + TailwindCSS)
-* ⚡ **Optimized performance** with React 19 + Vite
+* 🔐 **Role-based dashboards** delivering tailored experiences for **Senders, Receivers, and Admins**
+* 🚚 **Real-time parcel tracking** with detailed status logs and delivery updates
+* 📊 **Dynamic analytics & reporting** through interactive dashboards for smarter decision-making
+* 👤 **Sender capabilities**: Create parcels, cancel requests (if not dispatched), and view complete parcel history
+* 📥 **Receiver capabilities**: View incoming parcels and confirm deliveries when parcels are in transit
+* 🛠 **Admin capabilities**: Manage users, update parcel statuses, and oversee the entire delivery workflow
 
 ---
 
