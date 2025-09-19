@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { Package, MapPin, User, CalendarIcon, BadgeCheck, Phone, Mail } from "lucide-react";
 import Loading from "@/components/Loading";
-import { useIncomingParcelQuery, useRescheduleParcelMutation } from "@/redux/features/parcel/receiver.api";
+import { useIncomingParcelQuery, useRescheduleParcelMutation, useReturnParcelMutation } from "@/redux/features/parcel/receiver.api";
 import clsx from "clsx";
 import { Helmet } from "react-helmet-async";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -31,8 +31,11 @@ const statusColor = (status: string) => {
 const IncomingParcels = () => {
     const { data, isFetching } = useIncomingParcelQuery(undefined);
     const [rescheduleParcel] = useRescheduleParcelMutation();
+    const [returnParcel] = useReturnParcelMutation();
     const [open, setOpen] = useState(false);
+    const [openReturned, setOpenReturned] = useState(false);
     const [selectedParcel, setSelectedParcel] = useState<any>(null);
+    const [returnedParcel, setReturnedParcel] = useState<any>(null);
     const [newDate, setNewDate] = useState<Date | undefined>(undefined);
 
     if (isFetching) return <Loading />;
@@ -57,6 +60,28 @@ const IncomingParcels = () => {
         } catch (err: any) {
             console.log(err);
             toast.error(err?.data?.message || "Failed to reschedule parcel");
+        }
+    };
+
+    const handleReturned = async () => {
+        try {
+            if (!returnedParcel) return;
+
+            const parcelInfo = {
+                currentStatus: "Returned"
+            };
+
+            await returnParcel({
+                id: returnedParcel._id,
+                parcelInfo
+            }).unwrap();
+
+            toast.success("Parcel marked as Returned successfully!");
+            setOpenReturned(false);
+            setReturnedParcel(null);
+        } catch (err: any) {
+            console.log(err);
+            toast.error(err?.data?.message || "Failed to mark parcel as Returned");
         }
     };
 
@@ -160,19 +185,39 @@ const IncomingParcels = () => {
                                     <span>Delivery: {new Date(parcel.deliveryDate).toLocaleDateString()}</span>
                                 </div>
 
-                                {/* Reschedule Button */}
-                                {parcel.currentStatus === "In Transit" && (
-                                    <Button
-                                        size="sm"
-                                        className="bg-red-500 hover:bg-red-600 text-white w-full mt-3"
-                                        onClick={() => {
-                                            setSelectedParcel(parcel);
-                                            setOpen(true);
-                                        }}
-                                    >
-                                        Reschedule
-                                    </Button>
-                                )}
+                                <div className="flex gap-3 mt-3">
+                                    {/* Reschedule Button */}
+                                    {parcel.currentStatus === "In Transit" && (
+                                        <Button
+                                            size="sm"
+                                            variant="outline"
+                                            className="flex items-center gap-2 text-indigo-600 border-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:border-indigo-400 dark:hover:bg-indigo-900/20 cursor-pointer"
+                                            onClick={() => {
+                                                setSelectedParcel(parcel);
+                                                setOpen(true);
+                                            }}
+                                        >
+                                            <CalendarIcon className="h-4 w-4" />
+                                            Reschedule
+                                        </Button>
+                                    )}
+
+                                    {/* Returned Button */}
+                                    {parcel.currentStatus === "In Transit" && (
+                                        <Button
+                                            size="sm"
+                                            variant="destructive"
+                                            className="flex items-center gap-2 cursor-pointer"
+                                            onClick={() => {
+                                                setReturnedParcel(parcel);
+                                                setOpenReturned(true);
+                                            }}
+                                        >
+                                            <Package className="h-4 w-4" />
+                                            Returned
+                                        </Button>
+                                    )}
+                                </div>
                             </div>
 
                             {/* Status Logs */}
@@ -215,18 +260,43 @@ const IncomingParcels = () => {
                                 <Calendar
                                     mode="single"
                                     selected={newDate}
-                                    onSelect={setNewDate} // Correctly typed as Date | undefined
+                                    onSelect={setNewDate}
                                 />
                             </PopoverContent>
                         </Popover>
                     </div>
 
                     <DialogFooter className="mt-4 flex justify-end gap-2">
-                        <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+                        <Button variant="outline" className="cursor-pointer" onClick={() => setOpen(false)}>Cancel</Button>
                         <Button
-                            className="bg-indigo-500 hover:bg-indigo-600 text-white"
+                            size="sm"
+                            variant="outline"
+                            className="flex items-center gap-2 text-indigo-600 border-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:border-indigo-400 dark:hover:bg-indigo-900/20 cursor-pointer"
                             disabled={!newDate}
                             onClick={handleReschedule}
+                        >
+                            Confirm
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open={openReturned} onOpenChange={setOpenReturned}>
+                <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>Return Parcel</DialogTitle>
+                        <DialogDescription>
+                            Are you sure you want to mark this parcel as <strong>Returned</strong>?
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    <DialogFooter className="mt-4 flex justify-end gap-2">
+                        <Button variant="outline" className="cursor-pointer" onClick={() => setOpenReturned(false)}>Cancel</Button>
+                        <Button
+                            size="sm"
+                            variant="outline"
+                            className="flex items-center gap-2 text-indigo-600 border-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:border-indigo-400 dark:hover:bg-indigo-900/20 cursor-pointer"
+                            onClick={handleReturned}
                         >
                             Confirm
                         </Button>
