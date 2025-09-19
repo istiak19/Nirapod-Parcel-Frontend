@@ -16,7 +16,7 @@ export interface SectionHeadingProps {
     align?: "left" | "center";
 };
 
-export type IRole = "Receiver" | "Admin" | "Sender";
+export type IRole = "Receiver" | "Admin" | "Sender" | "Rider";
 
 export interface ITrack {
     status: string
@@ -36,12 +36,13 @@ export interface IUser {
     name: string;
     email: string;
     password?: string;
-    role: "Admin" | "Sender" | "Receiver";
+    role: "Admin" | "Sender" | "Receiver" | "Rider";
     phone?: string;
     picture?: string;
     address?: string;
     isDelete?: boolean;
     isBlocked?: "Active" | "Inactive" | "Blocked";
+    isStatus?: "Active" | "Inactive";
     companyName?: string;
     isVerified?: boolean;
     auths: Auth[];

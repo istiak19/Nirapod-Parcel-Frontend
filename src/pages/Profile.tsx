@@ -17,10 +17,11 @@ const Profile = () => {
 
     const user = data?.data;
 
-    const roleColors: Record<"Admin" | "Sender" | "Receiver", string> = {
+    const roleColors: Record<"Admin" | "Sender" | "Receiver" | "Rider", string> = {
         Admin: "from-red-500 to-red-600 text-white",
         Sender: "from-blue-500 to-blue-600 text-white",
         Receiver: "from-green-500 to-green-600 text-white",
+        Rider: "from-purple-500 to-purple-600 text-white",
     };
 
     const roleClass = roleColors[user.role as keyof typeof roleColors] || "from-gray-400 to-gray-500 text-white";
@@ -28,6 +29,9 @@ const Profile = () => {
     // Google login check
     const isGoogleLogin = user.auths?.some((auth: any) => auth.provider === "google");
     const hasCredentials = user.auths?.some((auth: any) => auth.provider === "credentials");
+
+    // Missing info check
+    const missingInfo = !user?.phone || !user?.address;
 
     return (
         <div className="flex justify-center px-4 py-16">
@@ -107,11 +111,26 @@ const Profile = () => {
                         </div>
                     )}
 
+                    {/* Missing info warning */}
+                    {missingInfo && (
+                        <div className="rounded-lg border border-red-300 bg-red-50 p-4 text-sm font-medium text-red-700 dark:border-red-700 dark:bg-red-900/40 dark:text-red-300 shadow-sm">
+                            <p className="text-center">
+                                ⚠️ Your profile is incomplete. Please add your{" "}
+                                {!user?.phone && !user?.address
+                                    ? "phone number and address"
+                                    : !user?.phone
+                                        ? "phone number"
+                                        : "address"}{" "}
+                                to continue.
+                            </p>
+                        </div>
+                    )}
+
                     {/* Info rows */}
                     <div className="grid gap-4">
                         <InfoRow icon={<Mail className="h-5 w-5 text-indigo-500" />} label="Email" value={user?.email} />
-                        <InfoRow icon={<Phone className="h-5 w-5 text-green-500" />} label="Phone" value={user?.phone} />
-                        <InfoRow icon={<MapPin className="h-5 w-5 text-pink-500" />} label="Address" value={user?.address} />
+                        <InfoRow icon={<Phone className="h-5 w-5 text-green-500" />} label="Phone" value={user?.phone || "Not provided"} />
+                        <InfoRow icon={<MapPin className="h-5 w-5 text-pink-500" />} label="Address" value={user?.address || "Not provided"} />
                     </div>
 
                     {/* Account Status */}

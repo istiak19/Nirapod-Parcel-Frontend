@@ -10,6 +10,7 @@ import { adminSidebarRoute } from "./adminRoutes";
 import { generateRoutes } from "@/utils/generatingRoute";
 import { senderSidebarRoute } from "./senderSidebarRoutes";
 import { receiverSidebarRoute } from "./receiverSidebarRoute";
+import { riderSidebarRoute } from "./riderSidebarRoute";
 
 const Contact = lazy(() => import("@/pages/Contact"));
 const About = lazy(() => import("@/pages/About"));
@@ -75,6 +76,16 @@ const router = createBrowserRouter([
                 index: true, element: <Navigate to="/receiver/receiver-analytics" />
             },
             ...generateRoutes(receiverSidebarRoute)
+        ]
+    },
+    {
+        path: "/rider",
+        Component: withAuth(DashboardLayout, role.rider as IRole),
+        children: [
+            {
+                index: true, element: <Navigate to="/rider/rider-analytics" />
+            },
+            ...generateRoutes(riderSidebarRoute)
         ]
     },
     {

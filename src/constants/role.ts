@@ -1,5 +1,6 @@
 export const role = {
     admin: "Admin",
     sender: "Sender",
-    receiver: "Receiver"
+    receiver: "Receiver",
+    rider: "Rider"
 };
