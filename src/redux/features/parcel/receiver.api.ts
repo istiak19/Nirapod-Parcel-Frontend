@@ -36,7 +36,7 @@ export const receiverApi = baseApi.injectEndpoints({
             invalidatesTags: ["PARCEL"],
             query: ({ id, parcelInfo }) => ({
                 url: `/parcels/return/${id}`,
-                method: "POST",
+                method: "PATCH",
                 data: parcelInfo
             })
         }),
