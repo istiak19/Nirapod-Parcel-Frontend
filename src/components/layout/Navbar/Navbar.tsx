@@ -16,6 +16,7 @@ const navigationLinks = [
   { href: "/admin", label: "Dashboard", role: role.admin },
   { href: "/sender", label: "Dashboard", role: role.sender },
   { href: "/receiver", label: "Dashboard", role: role.receiver },
+  { href: "/rider", label: "Dashboard", role: role.rider },
   { href: "/contact", label: "Contact", role: "PUBLIC" },
   { href: "/track", label: "Track", role: "PUBLIC" },
 ]

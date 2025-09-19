@@ -130,6 +130,7 @@ const RegisterForm = ({
                                     <SelectContent>
                                         <SelectItem value="Receiver">Receiver</SelectItem>
                                         <SelectItem value="Sender">Sender</SelectItem>
+                                        <SelectItem value="Rider">Rider</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 <FormDescription className="sr-only">
