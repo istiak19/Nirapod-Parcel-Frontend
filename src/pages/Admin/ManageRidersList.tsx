@@ -2,7 +2,8 @@
 import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useGetAllUserQuery, useUpdateUserMutation } from "@/redux/features/user/user.api";
+import { useUpdatedUserMutation } from "@/redux/features/auth/auth.api";
+import { useGetAllUserQuery } from "@/redux/features/user/user.api";
 import type { IUser } from "@/types";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
@@ -10,7 +11,7 @@ import Swal from "sweetalert2";
 
 const ManageRidersList = () => {
     const { data: users, isLoading } = useGetAllUserQuery(undefined);
-    const [updateUser] = useUpdateUserMutation();
+    const [updateUser] = useUpdatedUserMutation();
 
     const handleApproveReject = async (id: string, action: "Approve" | "Reject") => {
         const newStatus = action === "Approve" ? "Active" : "Inactive";
@@ -27,8 +28,11 @@ const ManageRidersList = () => {
             });
 
             if (!result.isConfirmed) return;
+            const userInfo = {
+                isStatus: newStatus
+            };
 
-            await updateUser({ id, isStatus: newStatus }).unwrap();
+            await updateUser({ id, userInfo }).unwrap();
             toast.success(`Rider ${action}d successfully!`);
         } catch (err: any) {
             toast.error(err?.data?.message || `Failed to ${action.toLowerCase()} rider.`);
@@ -92,6 +96,7 @@ const ManageRidersList = () => {
                                                 <Button
                                                     variant="outline"
                                                     size="sm"
+                                                    className="cursor-pointer"
                                                     onClick={() => handleApproveReject(user._id as string, "Approve")}
                                                 >
                                                     Approve
@@ -99,6 +104,7 @@ const ManageRidersList = () => {
                                                 <Button
                                                     variant="destructive"
                                                     size="sm"
+                                                    className="cursor-pointer"
                                                     onClick={() => handleApproveReject(user._id as string, "Reject")}
                                                 >
                                                     Reject
