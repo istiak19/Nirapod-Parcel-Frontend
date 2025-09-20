@@ -33,7 +33,15 @@ export const parcelApi = baseApi.injectEndpoints({
                 data: { isBlocked }
             })
         }),
+        assignRider: builder.mutation({
+            invalidatesTags: ["PARCEL"],
+            query: ({ id, rider }) => ({
+                url: `/parcels/assign-parcel/${id}`,
+                method: "PATCH",
+                data: { rider }
+            })
+        }),
     })
 });
 
-export const { useTrackQuery, useGetAllParcelQuery, useParcelStatusChangeMutation, useParcelBlockMutation } = parcelApi;
+export const { useTrackQuery, useGetAllParcelQuery, useParcelStatusChangeMutation, useParcelBlockMutation, useAssignRiderMutation } = parcelApi;

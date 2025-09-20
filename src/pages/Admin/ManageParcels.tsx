@@ -23,6 +23,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Search from "@/components/Search";
 import { Helmet } from "react-helmet-async";
+import AssignRider from "@/components/modules/parcel/AssignRider";
 
 const ManageParcels = () => {
     const [searchParams] = useSearchParams();
@@ -227,6 +228,10 @@ const ManageParcels = () => {
                                         >
                                             {parcel.isBlocked ? "Unblock" : "Block"}
                                         </Button>
+
+                                        {parcel.currentStatus === "Dispatched" && (
+                                            <AssignRider parcelId={parcel._id} />
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             ))}

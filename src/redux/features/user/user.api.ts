@@ -16,6 +16,13 @@ export const userApi = baseApi.injectEndpoints({
                 method: "GET"
             })
         }),
+        getAllRiders: builder.query({
+            providesTags: ["USER"],
+            query: () => ({
+                url: "/user/all-rider",
+                method: "GET"
+            })
+        }),
         getSingleUser: builder.query({
             providesTags: ["USER"],
             query: (id: string) => ({
@@ -34,4 +41,4 @@ export const userApi = baseApi.injectEndpoints({
     })
 });
 
-export const { useGetMeUserQuery, useGetAllUserQuery, useGetSingleUserQuery, useUpdateUserMutation } = userApi;
+export const { useGetMeUserQuery, useGetAllRidersQuery, useGetAllUserQuery, useGetSingleUserQuery, useUpdateUserMutation } = userApi;
