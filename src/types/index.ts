@@ -66,6 +66,11 @@ export interface IParcel {
     trackingId: string;
     weight: number;
     fee: number;
+    rider?: {
+        _id: string;
+        name: string;
+        phone?: string;
+    };
     pickupAddress: string;
     deliveryAddress: string;
     deliveryDate: string;

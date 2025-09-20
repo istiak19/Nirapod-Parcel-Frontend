@@ -164,6 +164,20 @@ const IncomingParcels = () => {
                                     )}
                                 </div>
 
+                                {/* Rider Info */}
+                                <div className="text-sm text-gray-600 dark:text-gray-300 space-y-1 mt-2">
+                                    <div className="flex items-center gap-2">
+                                        <User className="h-4 w-4 text-green-500" />
+                                        {parcel.rider ? (
+                                            <span className="font-medium">
+                                                Rider: {parcel.rider.name} ({parcel.rider.phone || "N/A"})
+                                            </span>
+                                        ) : (
+                                            <span className="italic text-gray-500">Rider not assigned</span>
+                                        )}
+                                    </div>
+                                </div>
+
                                 {/* Parcel Info */}
                                 <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                                     <Package className="h-4 w-4 text-yellow-500" />
