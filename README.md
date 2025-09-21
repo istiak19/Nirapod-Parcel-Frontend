@@ -29,27 +29,36 @@ With **role-specific navigation, API integration, and accessibility-focused desi
 
 ---
 
-## 🚀 Introduction
-
-**Nirapod Parcel** provides:
-
-* Role-based dashboards (**Sender, Receiver, Admin**)
-* Real-time parcel tracking
-* Delivery status updates & logs
-* Secure authentication & role switching
-* Analytics & reporting with charts
-* Accessibility-focused, mobile-friendly UI
-
----
-
 ## ✨ Features
 
-* 🔐 **Role-based dashboards** delivering tailored experiences for **Senders, Receivers, and Admins**
+* 🔐 **Role-based dashboards** delivering tailored experiences for **Senders, Receivers, Admins, and Riders**
 * 🚚 **Real-time parcel tracking** with detailed status logs and delivery updates
 * 📊 **Dynamic analytics & reporting** through interactive dashboards for smarter decision-making
 * 👤 **Sender capabilities**: Create parcels, cancel requests (if not dispatched), and view complete parcel history
 * 📥 **Receiver capabilities**: View incoming parcels and confirm deliveries when parcels are in transit
 * 🛠 **Admin capabilities**: Manage users, update parcel statuses, and oversee the entire delivery workflow
+* 🏍 **Rider capabilities**:
+
+  * View assigned parcels in real-time
+  * Track parcel pickup and delivery addresses
+  * Update parcel status and add delivery notes
+  * Monitor earnings per delivery and daily earnings
+  * View delivery history with detailed status logs
+  * Access analytics for assigned parcels with charts
+
+---
+
+## 🚀 Introduction
+
+**Nirapod Parcel** provides:
+
+* Role-based dashboards (**Sender, Receiver, Admin, Rider**)
+* Real-time parcel tracking with status updates
+* Delivery assignment and logging for riders
+* Rider analytics including parcel overview, earnings per delivery, and daily earnings
+* Secure authentication & role switching
+* Analytics & reporting with charts
+* Accessibility-focused, mobile-friendly UI
 
 ---
 
