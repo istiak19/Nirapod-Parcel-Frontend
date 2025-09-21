@@ -3,7 +3,7 @@ import { lazy } from "react";
 const Profile = lazy(() => import("@/pages/Profile"));
 const Deliveries = lazy(() => import("@/pages/Rider/Deliveries"));
 // const ReceiverParcels = lazy(() => import("@/pages/Receiver/ReceiverParcels"));
-const ReceiverAnalytics = lazy(() => import("@/pages/Receiver/ReceiverAnalytics"));
+const RiderAnalytics = lazy(() => import("@/pages/Rider/RiderAnalytics"));
 
 export const riderSidebarRoute = [
     {
@@ -12,7 +12,7 @@ export const riderSidebarRoute = [
             {
                 title: "Analytics",
                 url: "/rider/rider-analytics",
-                component: ReceiverAnalytics
+                component: RiderAnalytics
             },
             {
                 title: "Profile",
