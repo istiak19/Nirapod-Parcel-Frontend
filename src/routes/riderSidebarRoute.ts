@@ -1,9 +1,9 @@
 import { lazy } from "react";
 
 const Profile = lazy(() => import("@/pages/Profile"));
-// const IncomingParcels = lazy(() => import("@/pages/Receiver/IncomingParcels"));
+const Deliveries = lazy(() => import("@/pages/Rider/Deliveries"));
 // const ReceiverParcels = lazy(() => import("@/pages/Receiver/ReceiverParcels"));
-const ReceiverAnalytics = lazy(() => import("@/pages/Receiver/ReceiverAnalytics"));
+const RiderAnalytics = lazy(() => import("@/pages/Rider/RiderAnalytics"));
 
 export const riderSidebarRoute = [
     {
@@ -12,18 +12,18 @@ export const riderSidebarRoute = [
             {
                 title: "Analytics",
                 url: "/rider/rider-analytics",
-                component: ReceiverAnalytics
+                component: RiderAnalytics
             },
             {
                 title: "Profile",
                 url: "/rider/profile",
                 component: Profile
             },
-            // {
-            //     title: "Incoming Parcels",
-            //     url: "/receiver/incoming-parcels",
-            //     component: IncomingParcels
-            // },
+            {
+                title: "My Deliveries",
+                url: "/rider/deliveries-parcels",
+                component: Deliveries
+            },
             // {
             //     title: "My Parcels",
             //     url: "/receiver/receiver-parcels",
