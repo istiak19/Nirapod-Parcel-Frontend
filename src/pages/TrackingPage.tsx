@@ -29,7 +29,7 @@ const TrackingPage = () => {
             <motion.h1
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-5xl font-extrabold text-red-600 mb-6 text-center drop-shadow-sm"
+                className="text-5xl font-bold text-red-600 mb-6 text-center drop-shadow-sm"
             >
                 Track Your Parcel
             </motion.h1>
