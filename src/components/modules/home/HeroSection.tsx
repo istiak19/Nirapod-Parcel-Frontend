@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const HeroSection = () => {
     return (
-        <section className="relative flex flex-col lg:flex-row items-center justify-between container mx-auto px-6 py-20">
+        <section className="relative flex flex-col lg:flex-row items-center justify-between container mx-auto px-6 py-24">
             {/* Text */}
             <motion.div
                 initial={{ opacity: 0, x: -50 }}
