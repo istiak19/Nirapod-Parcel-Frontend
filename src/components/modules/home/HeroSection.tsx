@@ -1,9 +1,51 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import bannerPic from "@/assets/images/banner.avif";
 import { Link } from "react-router";
 import { motion } from "framer-motion";
 
+import banner1 from "@/assets/images/banner.avif";
+import banner2 from "@/assets/images/banner-1.jpg";
+import banner3 from "@/assets/images/banner-2.jpg";
+import banner4 from "@/assets/images/banner-3.jpg";
+import banner5 from "@/assets/images/banner-4.jpg";
+
 const HeroSection = () => {
+    const [currentBanner, setCurrentBanner] = useState(0);
+    const banners = [
+        {
+            src: banner1,
+            title: "Delivery Today, Enjoy Tomorrow",
+            subtitle: "Fast and reliable delivery service at your doorstep",
+        },
+        {
+            src: banner2,
+            title: "Hassle-Free Shipping",
+            subtitle: "Send and receive parcels with ease and confidence",
+        },
+        {
+            src: banner3,
+            title: "Fast & Reliable Delivery",
+            subtitle: "We deliver parcels across Bangladesh efficiently",
+        },
+        {
+            src: banner4,
+            title: "Real-Time Tracking",
+            subtitle: "Track your parcel at every step",
+        },
+        {
+            src: banner5,
+            title: "Affordable Shipping Rates",
+            subtitle: "Send parcels without breaking the bank",
+        },
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentBanner((prev) => (prev + 1) % banners.length);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, [banners.length]);
+
     return (
         <section className="relative flex flex-col lg:flex-row items-center justify-between container mx-auto px-6 py-24">
             {/* Text */}
@@ -41,15 +83,35 @@ const HeroSection = () => {
                 </div>
             </motion.div>
 
-            {/* Hero Image */}
-            <motion.img
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8 }}
-                src={bannerPic}
-                alt="Parcel delivery Bangladesh"
-                className="mt-12 lg:mt-0 max-w-lg w-full rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800"
-            />
+            <div>
+                <motion.img
+                    key={currentBanner}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8 }}
+                    src={banners[currentBanner].src}
+                    alt="Parcel delivery Bangladesh"
+                    className="w-full max-w-lg rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800"
+                />
+
+                {/* Text Below Image */}
+                <motion.div
+                    key={`text-${currentBanner}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.8 }}
+                    className="mt-2 text-center"
+                >
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                        {banners[currentBanner].title}
+                    </h2>
+                    <p className="mt-2 text-xs text-gray-600 dark:text-gray-300">
+                        {banners[currentBanner].subtitle}
+                    </p>
+                </motion.div>
+            </div>
         </section>
     );
 };
