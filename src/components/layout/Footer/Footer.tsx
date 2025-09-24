@@ -97,10 +97,10 @@ const Footer = () => {
 
                         <ul className="mt-8 flex flex-wrap justify-start gap-4 sm:mt-0 lg:justify-end">
                             <li>
-                                <Link to="/" className="transition hover:opacity-75"> Terms & Conditions </Link>
+                                <Link to="/terms" className="transition hover:opacity-75"> Terms & Conditions </Link>
                             </li>
                             <li>
-                                <Link to="/" className="transition hover:opacity-75"> Privacy Policy </Link>
+                                <Link to="/privacy-policy" className="transition hover:opacity-75"> Privacy Policy </Link>
                             </li>
                             <li>
                                 <Link to="/" className="transition hover:opacity-75"> Cookie Policy </Link>
