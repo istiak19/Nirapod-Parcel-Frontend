@@ -24,6 +24,8 @@ const UpdateProfile = lazy(() => import("@/pages/updateProfile"));
 const SetPassword = lazy(() => import("@/pages/Auth/SetPassword"));
 const ChangePassword = lazy(() => import("@/pages/Auth/ChangePassword"));
 const ResetPassword = lazy(() => import("@/pages/Auth/ResetPassword"));
+const Privacy = lazy(() => import("@/pages/Privacy"));
+const TermsAndConditions = lazy(() => import("@/pages/TermsAndConditions"));
 
 const router = createBrowserRouter([
     {
@@ -119,6 +121,14 @@ const router = createBrowserRouter([
     {
         path: "/unauthorized",
         Component: Unauthorized
+    },
+    {
+        path: "/privacy-policy",
+        Component: Privacy
+    },
+    {
+        path: "/terms",
+        Component: TermsAndConditions
     },
     {
         path: "*",
