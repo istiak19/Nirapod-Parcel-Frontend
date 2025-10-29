@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router";
 
 import banner1 from "@/assets/images/banner.avif";
@@ -58,7 +58,7 @@ const HeroSection = () => {
     }));
 
     return (
-        <section className="relative flex flex-col lg:flex-row items-center justify-between container mx-auto px-6 py-24 overflow-hidden">
+        <section className="relative flex flex-col lg:flex-row items-center justify-between container mx-auto px-6 pt-24 pb-10 overflow-hidden">
             {/* Sparkles */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 {sparkles.map((s, idx) => (
@@ -111,33 +111,41 @@ const HeroSection = () => {
                 </div>
             </motion.div>
 
-            {/* Banner Image */}
-            <div className="relative z-10">
-                <motion.img
-                    key={currentBanner}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8 }}
-                    src={banners[currentBanner].src}
-                    alt="Parcel delivery Bangladesh"
-                    className="w-full max-w-lg rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800"
-                />
+            {/* Smooth Image Transition */}
+            <div className="relative z-10 w-full max-w-2xl">
+                <div className="relative h-[350px] w-full overflow-hidden rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800">
+                    <AnimatePresence mode="wait">
+                        <motion.img
+                            key={banners[currentBanner].src}
+                            src={banners[currentBanner].src}
+                            alt={banners[currentBanner].title}
+                            initial={{ opacity: 0, scale: 1.05 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={{ duration: 1 }}
+                            className="absolute inset-0 w-full h-full object-cover"
+                        />
+                    </AnimatePresence>
+                </div>
 
-                <motion.div
-                    key={`text-${currentBanner}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="mt-2 text-center"
-                >
-                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                        {banners[currentBanner].title}
-                    </h2>
-                    <p className="mt-2 text-xs text-gray-600 dark:text-gray-300">
-                        {banners[currentBanner].subtitle}
-                    </p>
-                </motion.div>
+                {/* Smooth Text Change */}
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={`text-${currentBanner}`}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.6 }}
+                        className="mt-3 text-center"
+                    >
+                        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                            {banners[currentBanner].title}
+                        </h2>
+                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                            {banners[currentBanner].subtitle}
+                        </p>
+                    </motion.div>
+                </AnimatePresence>
             </div>
         </section>
     );
