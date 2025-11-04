@@ -35,7 +35,7 @@ export default function Navbar() {
   const handleLogout = async () => {
     await logout(undefined)
     dispatch(authApi.util.resetApiState())
-  }
+  };
 
   const visibleLinks = navigationLinks.filter(
     (link) => link.role === "PUBLIC" || link.role === data?.data?.role

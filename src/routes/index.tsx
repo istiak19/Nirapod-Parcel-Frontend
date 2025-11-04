@@ -26,6 +26,7 @@ const ChangePassword = lazy(() => import("@/pages/Auth/ChangePassword"));
 const ResetPassword = lazy(() => import("@/pages/Auth/ResetPassword"));
 const Privacy = lazy(() => import("@/pages/Privacy"));
 const TermsAndConditions = lazy(() => import("@/pages/TermsAndConditions"));
+const DocsPage = lazy(() => import("@/pages/Docs"));
 
 const router = createBrowserRouter([
     {
@@ -129,6 +130,10 @@ const router = createBrowserRouter([
     {
         path: "/terms",
         Component: TermsAndConditions
+    },
+    {
+        path: "/docs",
+        Component: DocsPage
     },
     {
         path: "*",
