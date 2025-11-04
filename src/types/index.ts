@@ -1,12 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { LucideIcon } from "lucide-react";
 import type { ComponentType } from "react";
+
+
+export interface ISidebarRoute {
+    title: string;
+    url: string;
+    component: ComponentType<any>;
+    icon?: LucideIcon;
+    items?: ISidebarRoute[];
+};
 
 export interface ISidebarItem {
     title: string;
-    items: {
-        title: string;
-        url: string;
-        component: ComponentType;
-    }[];
+    items: ISidebarRoute[];
 };
 
 export interface SectionHeadingProps {

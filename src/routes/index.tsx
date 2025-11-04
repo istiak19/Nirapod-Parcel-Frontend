@@ -6,7 +6,7 @@ import type { IRole } from "@/types";
 import { withAuth } from "@/utils/withAuth";
 import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router";
-import { adminSidebarRoute } from "./adminRoutes";
+import { adminSidebarRoute } from "./adminSidebarRoute";
 import { generateRoutes } from "@/utils/generatingRoute";
 import { senderSidebarRoute } from "./senderSidebarRoutes";
 import { receiverSidebarRoute } from "./receiverSidebarRoute";
