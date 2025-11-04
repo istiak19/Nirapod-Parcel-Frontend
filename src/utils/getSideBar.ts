@@ -1,5 +1,5 @@
 import { role } from "@/constants/role";
-import { adminSidebarRoute } from "@/routes/adminRoutes";
+import { adminSidebarRoute } from "@/routes/adminSidebarRoute";
 import { receiverSidebarRoute } from "@/routes/receiverSidebarRoute";
 import { riderSidebarRoute } from "@/routes/riderSidebarRoute";
 import { senderSidebarRoute } from "@/routes/senderSidebarRoutes";

@@ -1,4 +1,5 @@
 import { lazy } from "react";
+import { BarChart3, User, Package, Inbox } from "lucide-react";
 
 const Profile = lazy(() => import("@/pages/Profile"));
 const IncomingParcels = lazy(() => import("@/pages/Receiver/IncomingParcels"));
@@ -12,22 +13,26 @@ export const receiverSidebarRoute = [
             {
                 title: "Analytics",
                 url: "/receiver/receiver-analytics",
-                component: ReceiverAnalytics
+                component: ReceiverAnalytics,
+                icon: BarChart3,
             },
             {
                 title: "Profile",
                 url: "/receiver/profile",
-                component: Profile
+                component: Profile,
+                icon: User,
             },
             {
                 title: "Incoming Parcels",
                 url: "/receiver/incoming-parcels",
-                component: IncomingParcels
+                component: IncomingParcels,
+                icon: Inbox,
             },
             {
                 title: "My Parcels",
                 url: "/receiver/receiver-parcels",
-                component: ReceiverParcels
+                component: ReceiverParcels,
+                icon: Package,
             },
         ],
     },

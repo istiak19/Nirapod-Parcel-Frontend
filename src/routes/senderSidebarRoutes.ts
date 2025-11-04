@@ -1,4 +1,5 @@
 import { lazy } from "react";
+import { BarChart3, User, Package, PlusSquare } from "lucide-react";
 
 const Profile = lazy(() => import("@/pages/Profile"));
 const SenderParcels = lazy(() => import("@/pages/Sender/SenderParcels"));
@@ -12,22 +13,26 @@ export const senderSidebarRoute = [
             {
                 title: "Analytics",
                 url: "/sender/sender-analytics",
-                component: SenderAnalytics
+                component: SenderAnalytics,
+                icon: BarChart3,
             },
             {
                 title: "Profile",
                 url: "/sender/profile",
-                component: Profile
+                component: Profile,
+                icon: User,
             },
             {
                 title: "My Parcels",
                 url: "/sender/parcels",
-                component: SenderParcels
+                component: SenderParcels,
+                icon: Package,
             },
             {
                 title: "Create Parcel",
                 url: "/sender/create-parcel",
-                component: CreateParcel
+                component: CreateParcel,
+                icon: PlusSquare,
             },
         ],
     },
