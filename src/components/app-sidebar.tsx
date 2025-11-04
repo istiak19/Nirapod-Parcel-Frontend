@@ -5,6 +5,7 @@ import { NavLink, useLocation } from "react-router";
 import {
     Sidebar,
     SidebarContent,
+    SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
     SidebarGroupLabel,
@@ -21,6 +22,7 @@ import { getSideBar } from "@/utils/getSideBar";
 import { useGetMeUserQuery } from "@/redux/features/user/user.api";
 import type { LucideIcon } from "lucide-react";
 import type { ISidebarItem, ISidebarRoute } from "@/types";
+import { NavUser } from "./nav-user";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const { data: userData } = useGetMeUserQuery(undefined);
@@ -67,8 +69,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                                         <NavLink
                                                             to={item.url}
                                                             className={`flex w-full items-center gap-3 px-3 py-2 rounded-md transition-colors duration-200 ${isActiveRoute(item.url)
-                                                                    ? "text-red-500 font-semibold bg-red-100 dark:bg-red-900/30"
-                                                                    : "text-foreground hover:text-foreground hover:bg-gray-700 dark:hover:bg-gray-700/50"
+                                                                ? "text-red-500 font-semibold bg-red-100 dark:bg-red-900/30"
+                                                                : "text-foreground hover:text-foreground hover:bg-gray-700 dark:hover:bg-gray-700/50"
                                                                 }`}
                                                         >
                                                             {Icon && <Icon className="w-5 h-5 shrink-0" />}
@@ -91,8 +93,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                                                         <NavLink
                                                                             to={sub.url}
                                                                             className={`ml-8 block w-full px-3 py-2 rounded-md transition-colors ${isActiveRoute(sub.url)
-                                                                                    ? "text-red-500 font-semibold bg-red-100 dark:bg-red-900/30"
-                                                                                    : "text-muted-foreground hover:text-foreground hover:bg-gray-700 dark:hover:bg-gray-700/50"
+                                                                                ? "text-red-500 font-semibold bg-red-100 dark:bg-red-900/30"
+                                                                                : "text-muted-foreground hover:text-foreground hover:bg-gray-700 dark:hover:bg-gray-700/50"
                                                                                 }`}
                                                                         >
                                                                             {sub.title}
@@ -112,6 +114,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </SidebarGroup>
                 ))}
             </SidebarContent>
+
+            <SidebarFooter>
+                {userData && <NavUser user={userData?.data} />}
+            </SidebarFooter>
 
             <SidebarRail />
         </Sidebar>
